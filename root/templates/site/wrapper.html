@@ -1,11 +1,10 @@
 [% SET 
   sections = [
     'about',
+    'demos',
     'download',
     'documentation',
-    'demos',
     'support',
-    'contact',
   ]
   bootstrap_path = "/assets/local/misc/static/bootstrap-examples"
   bootstrap_css = "$bootstrap_path/bootstrap/css/bootstrap.css"
@@ -58,7 +57,11 @@
           [%- ELSE %]
            <li>
           [%- END %]
-             <a href="[% section %]">[% section.ucfirst %]</a>
+            [%- IF section == 'about' -%]
+              <a href="/">[% section.ucfirst %]</a>
+            [%- ELSE -%]
+              <a href="[% section %]">[% section.ucfirst %]</a>
+            [%- END -%]
            </li>
         [%- END %]
         </ul>
