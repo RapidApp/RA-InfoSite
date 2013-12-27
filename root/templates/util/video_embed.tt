@@ -1,0 +1,10 @@
+<iframe
+  src="[% player_url %]" 
+  class="tscplayer_inline" 
+  name="tsc_player" 
+  scrolling="no" 
+  frameborder="0" 
+  webkitallowfullscreen 
+  mozallowfullscreen 
+  allowfullscreen
+></iframe>

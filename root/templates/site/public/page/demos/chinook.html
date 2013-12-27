@@ -1,0 +1,75 @@
+[% WRAPPER site/wrapper.html 
+  active_section = 'demos'
+  title = 'RapidApp Demos'
+-%]
+
+<div class="jumbotron"></div>
+
+<div class="body-content">
+  <h2>Demos</h2>
+  
+  Live demos and videos. More to follow....
+  
+  <br><br>
+
+  <h3>CMS Intro</h3>
+  
+  <span style="color:#666666;padding-left:3px;"><i>
+    Example public website with template-driven CMS...
+  </i></span>
+
+  <link 
+    href="/assets/local/misc/static/video/RapidApp_CMS/RapidApp_CMS_embed.css" 
+    rel="stylesheet" type="text/css"
+  >
+
+  <iframe
+    src="/assets/local/misc/static/video/RapidApp_CMS/RapidApp_CMS_player.html" 
+    class="tscplayer_inline" 
+    name="tsc_player" 
+    scrolling="no" 
+    frameborder="0" 
+    webkitallowfullscreen 
+    mozallowfullscreen 
+    allowfullscreen
+   ></iframe>
+   
+   <br>
+   
+   <div style="padding-left:50px;font-size:1.3em;font-weight:bold;">
+     <h4>Code used in this demo:</h4>
+     
+     <ul><li>
+       <a 
+        target="_blank" 
+        href="https://github.com/IntelliTree/RA-InfoSite_cmsdemo"
+        style="font-size:1.3em;color:limegreen;padding-left:10px;"
+       >
+         github.com/IntelliTree/RA-InfoSite_cmsdemo
+       </a>
+     </li></ul>
+     
+     <br>
+     
+     <h4>Try it yourself:</h4>
+     
+<pre>
+# install RapidApp:
+cpanm RapidApp
+
+# download the demo app:
+git clone http://github.com/IntelliTree/RA-InfoSite_cmsdemo.git
+
+# start the test server:
+RA-InfoSite_cmsdemo/script/ra_infosite_server.pl
+
+# Initial username/password:   admin/pass
+</pre>
+     
+   </div>
+   
+   <br>
+
+</div>
+
+[% END %]
