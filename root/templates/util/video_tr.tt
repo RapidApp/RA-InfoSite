@@ -17,9 +17,9 @@
         <div style="padding-top:35px;"></div>
       </th>
       <td>
-        <p>Length: <i>[% video_length %]</i></p>
+        <p>Length: <span style="color:#666666;"><i>[% video_length %]</i></span></p>
        
-        Topics:
+        Topics Covered:
         <ul>
           [% FOREACH topic IN video_topics %]
           <li>[% topic %]</li>
