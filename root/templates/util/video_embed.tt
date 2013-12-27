@@ -1,11 +1,12 @@
 [% DEFAULT
   width = 920
   height = 690
+  url_prefix = '/assets/local/misc/static/video/chinook/'
 -%]
 
 <div style="border: 1px gray solid;width:[% width %]px;height:[% height %]px;">
   <iframe
-    src="[% player_url %]"
+    src="[% url_prefix %][% player_file %]"
     style="width:100%;height:100%;"
     class="tscplayer_inline" 
     name="tsc_player" 
@@ -37,3 +38,17 @@
     </td>
   </tr>
 </table>
+
+
+
+[% IF video_file %]
+<br><br>
+
+&nbsp;&nbsp;Download video file: &nbsp;&nbsp;
+<img src="/assets/local/misc/static/images/chinook/film_save.png">
+<b><a 
+  target="_blank"
+  href="[% url_prefix %][% video_file %]"  
+>[% video_file %]</a></b>
+
+[% END %]
