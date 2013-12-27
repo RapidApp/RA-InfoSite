@@ -4,15 +4,32 @@
 -%]
 
 <div style="border: 1px gray solid;width:[% width %]px;height:[% height %]px;">
-<iframe
-  src="[% player_url %]"
-  style="width:100%;height:100%;"
-  class="tscplayer_inline" 
-  name="tsc_player" 
-  scrolling="no" 
-  frameborder="0" 
-  webkitallowfullscreen 
-  mozallowfullscreen 
-  allowfullscreen
-></iframe>
+  <iframe
+    src="[% player_url %]"
+    style="width:100%;height:100%;"
+    class="tscplayer_inline" 
+    name="tsc_player" 
+    scrolling="no" 
+    frameborder="0" 
+    webkitallowfullscreen 
+    mozallowfullscreen 
+    allowfullscreen
+  ></iframe>
 </div>
+
+<table style="width:[% width %]px;font-size:1.1em;color:crimson;">
+  <tr>
+    <td width="50%">
+      [% IF prev_url %]
+        <span style="font-size:1.4em;">&larr;</span>
+        <a href="[% prev_url %]">[% prev_text %]</a>
+      [% END %]
+    </td>
+    <td width="50%" style="text-align:right;">
+      [% IF next_url %]
+        <a href="[% next_url %]">[% next_text %]</a>
+        <span style="font-size:1.4em;">&rarr;</span>
+      [% END %]
+    </td>
+  </tr>
+</table>
