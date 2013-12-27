@@ -1,6 +1,6 @@
 [% DEFAULT
-  width = 800
-  height = 600
+  width = 920
+  height = 690
 -%]
 
 <div style="border: 1px gray solid;width:[% width %]px;height:[% height %]px;">
@@ -19,13 +19,17 @@
 
 <table style="width:[% width %]px;font-size:1.1em;color:crimson;">
   <tr>
-    <td width="50%">
+    <td width="33%">
       [% IF prev_url %]
         <span style="font-size:1.4em;">&larr;</span>
         <a href="[% prev_url %]">[% prev_text %]</a>
       [% END %]
     </td>
-    <td width="50%" style="text-align:right;">
+    <td width="33%" style="text-align:center;font-size:.85em;">
+      <span style="font-size:1.4em;">&uArr;</span>
+      <a href="/demos/chinook">Back to List</a>
+    </td>
+    <td width="33%" style="text-align:right;">
       [% IF next_url %]
         <a href="[% next_url %]">[% next_text %]</a>
         <span style="font-size:1.4em;">&rarr;</span>

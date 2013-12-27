@@ -1,75 +1,199 @@
 [% WRAPPER site/wrapper.html 
   active_section = 'demos'
-  title = 'RapidApp Demos'
+  title = 'RapidDbic "Chinook" Demo'
 -%]
 
-<div class="jumbotron"></div>
-
-<div class="body-content">
-  <h2>Demos</h2>
+<div class="body-content" style="margin-top:90px;margin-bottom:50px;">
+  <h2>RapidDbic "Chinook" Demo</h2>
   
-  Live demos and videos. More to follow....
+This video demo series provides a tutorial of RapidApp database features using the "RapidDbic" plugin using the 3rd-party "Chinook" sample database (<a target="_blank" href="http://chinookdatabase.codeplex.com/">chinookdatabase.codeplex.com</a>).
+  
+  <div style="margin-left:40px;padding-top:20px;padding-bottom:20px;color:#966F33;">
+    <h4>Companion Git Repo:</h4>
+    
+    <h4>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<a 
+      href="https://github.com/IntelliTree/RA-ChinookDemo" 
+      target="_blank"
+      style="color:green;">github.com/IntelliTree/RA-ChinookDemo</a>
+    </h4>
+  </div>
+  
+  The videos are divided into both full parts and sub-sections below:
+  <br> <br>
+  
+  <h3>Part 1 - Intro, Agenda & Setup</h3>
+  <hr>
+  
+  <table class="video_list" style="margin-left:40px;"><tr>
+    <th width="35%" class="full_side">
+    
+      <div style="padding-top:50px;width:190px">
+    
+        <a href="/demos/chinook/1-full">
+          <center>Part 1 - FULL</center>
+          <img 
+            style="width:100%"
+            src="/assets/local/misc/static/images/chinook/1_1_frame.png"
+          >
+        </a>
+        <br>
+        <span class="length"><center>(Length: <i>9:10</i>)</center></span>
+      </div>
+    </th>
+    <td width="65%">
+      <table class="video_list">
+        [% INCLUDE util/video_tr.tt 
+          video_name = '1.1 - Intro'
+          video_url = '/demos/chinook/1_1'
+          video_img = '/assets/local/misc/static/images/chinook/1_1_frame.png'
+          video_length = '1:41'
+          video_topics = [ 'Demo overview', 'Companion Git Repo' ]
+        %]
+      
+        [% INCLUDE util/video_tr.tt 
+          video_name = '1.2 - Agenda'
+          video_url = '/demos/chinook/1_2'
+          video_img = '/assets/local/misc/static/images/chinook/1_2_frame.png'
+          video_length = '2:52'
+          video_topics = [ 'Agenda', 'Table of Contents', 'Prerequisite Knowledge' ]
+        %]
+        
+        [% INCLUDE util/video_tr.tt 
+          video_name = '1.3 - App & Env Setup'
+          video_url = '/demos/chinook/1_3'
+          video_img = '/assets/local/misc/static/images/chinook/1_3_frame.png'
+          video_length = '4:36'
+          video_topics = [ 
+            'Create Catalyst App',
+            'Commit shotcut',
+            'Download & Setup SQLite DB',
+            'Setup DBIC Model' 
+          ]
+        %]
+      </table>
+    </td>
+  </tr></table>
+  
   
   <br><br>
-
-  <h3>CMS Intro</h3>
   
-  <span style="color:#666666;padding-left:3px;"><i>
-    Example public website with template-driven CMS...
-  </i></span>
+  <h3>Part 2 - RapidDbic Basics</h3>
+  
+  
+  <hr>
+  
+  
+    <table class="video_list" style="margin-left:40px;"><tr>
+    <th width="35%" class="full_side">
+    
+      <div style="padding-top:50px;width:190px">
+    
+        <a href="/demos/chinook/2-full">
+          <center>Part 2 - FULL</center>
+          <img 
+            style="width:100%"
+            src="/assets/local/misc/static/images/chinook/2_1_frame.png"
+          >
+        </a>
+        <br>
+        <span class="length"><center>(Length: <i>44:27</i>)</center></span>
+      </div>
+    </th>
+    <td width="65%">
+      <table class="video_list">
+        [% INCLUDE util/video_tr.tt 
+          video_name = '2.1 - Out-of-the-box Basics'
+          video_url = '/demos/chinook/2_1'
+          video_img = '/assets/local/misc/static/images/chinook/2_1_frame.png'
+          video_length = '10:35'
+          video_topics = [ 
+            'Setup RapidDbic',
+            'TabGui interface basics'
+            'Demo main grid features',
+            'Filters, Searching & Summary Functions'
+          ]
+        %]
+        
+        [% INCLUDE util/video_tr.tt 
+          video_name = '2.2 - Relationships'
+          video_url = '/demos/chinook/2_2'
+          video_img = '/assets/local/misc/static/images/chinook/2_2_frame.png'
+          video_length = '6:39'
+          video_topics = [ 
+            'Single & Multi Relationship Columns',
+            'Joined Columns',
+            'TableSpecs',
+            'Display Columns'
+          ]
+        %]
+        
+        [% INCLUDE util/video_tr.tt 
+          video_name = '2.3 - CRUD'
+          video_url = '/demos/chinook/2_3'
+          video_img = '/assets/local/misc/static/images/chinook/2_3_frame.png'
+          video_length = '14:08'
+          video_topics = [ 
+            'Enabling Editing',
+            'Relationship editing',
+            'Cascade deletes',
+            'Auto editor types (grid vs combo)'
+          ]
+        %]
+        
+        [% INCLUDE util/video_tr.tt 
+          video_name = '2.4 - CRUD Options'
+          video_url = '/demos/chinook/2_4'
+          video_img = '/assets/local/misc/static/images/chinook/2_4_frame.png'
+          video_length = '7:30'
+          video_topics = [ 
+            'Persist Immediately',
+            'Combinator Options',
+            'Demo different CRUD modes',
+          ]
+        %]
+        
+        [% INCLUDE util/video_tr.tt 
+          video_name = '2.5 - Virtual Columns'
+          video_url = '/demos/chinook/2_5'
+          video_img = '/assets/local/misc/static/images/chinook/2_5_frame.png'
+          video_length = '5:38'
+          video_topics = [ 
+            'Example Virtual Column',
+            'Writeable Virtual Column',
+            'As Display Column'
+          ]
+        %]
+      </table>
+    </td>
+  </tr></table>
+  
+  
+  
+  <br><br>
+  
+  <h3>Part 3 - Auth & Saved Views</h3>
+  <hr>
+  
+  <h4>Coming soon...</h4>
+  
+  
+  
+  
+  
+  
+  
+  
+  <table class="video_list">
+    
+ 
 
-  <link 
-    href="/assets/local/misc/static/video/RapidApp_CMS/RapidApp_CMS_embed.css" 
-    rel="stylesheet" type="text/css"
-  >
-
-  <iframe
-    src="/assets/local/misc/static/video/RapidApp_CMS/RapidApp_CMS_player.html" 
-    class="tscplayer_inline" 
-    name="tsc_player" 
-    scrolling="no" 
-    frameborder="0" 
-    webkitallowfullscreen 
-    mozallowfullscreen 
-    allowfullscreen
-   ></iframe>
-   
-   <br>
-   
-   <div style="padding-left:50px;font-size:1.3em;font-weight:bold;">
-     <h4>Code used in this demo:</h4>
-     
-     <ul><li>
-       <a 
-        target="_blank" 
-        href="https://github.com/IntelliTree/RA-InfoSite_cmsdemo"
-        style="font-size:1.3em;color:limegreen;padding-left:10px;"
-       >
-         github.com/IntelliTree/RA-InfoSite_cmsdemo
-       </a>
-     </li></ul>
-     
-     <br>
-     
-     <h4>Try it yourself:</h4>
-     
-<pre>
-# install RapidApp:
-cpanm RapidApp
-
-# download the demo app:
-git clone http://github.com/IntelliTree/RA-InfoSite_cmsdemo.git
-
-# start the test server:
-RA-InfoSite_cmsdemo/script/ra_infosite_server.pl
-
-# Initial username/password:   admin/pass
-</pre>
-     
-   </div>
-   
-   <br>
-
+    
+  </table>
+  
+  
+  
+  
 </div>
+
 
 [% END %]

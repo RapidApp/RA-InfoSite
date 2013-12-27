@@ -1,0 +1,30 @@
+[% DEFAULT
+  video_name = 'Untitled'
+  video_url = '/demos/chinook/1_1'
+  video_img = '/assets/local/misc/static/images/chinook/1_1_frame.png'
+  video_length = '0:00'
+  video_topics = [ 'Topic 1', 'Topic 2' ]
+-%]
+    <tr>
+      <th>
+        <a href="[% video_url %]">
+          [% video_name %]<br>
+          <img 
+            style="width:130px;"
+            src="[% video_img %]"
+          >
+        </a>
+        <div style="padding-top:35px;"></div>
+      </th>
+      <td>
+        <p>Length: <i>[% video_length %]</i></p>
+       
+        Topics:
+        <ul>
+          [% FOREACH topic IN video_topics %]
+          <li>[% topic %]</li>
+          [% END %]
+        </ul>
+       
+      </td>
+    </tr>

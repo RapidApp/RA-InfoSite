@@ -1,0 +1,39 @@
+
+table.video_list  {
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.video_list * {
+  vertical-align: top;
+}
+
+
+.video_list th {
+  font-size:1.2em;
+  width: 200px;
+}
+
+.video_list p {
+  margin: 0 0 5px;
+}
+
+.video_list td {
+  padding: 10px;
+  font-size: 0.9em;
+}
+
+.video_list .video_name {
+  font-size: 1.3em;
+}
+
+
+.video_list .full_side a {
+  font-size: 1.5em;
+}
+
+.video_list .full_side .length {
+  font-size: 0.7em;
+  font-weight: normal;
+  line-height:2em;
+}
