@@ -15,7 +15,11 @@ table.video_list  {
 }
 
 .video_list p {
-  margin: 0 0 5px;
+  margin: 0 0 2px;
+}
+
+.video_list ul {
+  margin-bottom: 2px;
 }
 
 .video_list td {
@@ -36,4 +40,12 @@ table.video_list  {
   font-size: 0.7em;
   font-weight: normal;
   line-height:2em;
+}
+
+
+a.cmd_link {
+  color:limegreen;
+  font-weight:bold;
+  font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
+
 }

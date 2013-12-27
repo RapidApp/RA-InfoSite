@@ -7,17 +7,40 @@
   <h2>RapidDbic "Chinook" Demo</h2>
   
 This video demo series provides a tutorial of RapidApp database features using the "RapidDbic" plugin using the 3rd-party "Chinook" sample database (<a target="_blank" href="http://chinookdatabase.codeplex.com/">chinookdatabase.codeplex.com</a>).
-  
-  <div style="margin-left:40px;padding-top:20px;padding-bottom:20px;color:#966F33;">
-    <h4>Companion Git Repo:</h4>
-    
-    <h4>&nbsp;&nbsp;&nbsp;&bull;&nbsp;&nbsp;&nbsp;<a 
-      href="https://github.com/IntelliTree/RA-ChinookDemo" 
-      target="_blank"
-      style="color:green;">github.com/IntelliTree/RA-ChinookDemo</a>
-    </h4>
-  </div>
-  
+
+
+
+   <div style="padding:30px;font-size:1.3em;font-weight:bold;">
+     <h4>Companion Git Repo (code & commands):</h4>
+     
+     <ul><li>
+       <a 
+        target="_blank" 
+        href="https://github.com/IntelliTree/RA-ChinookDemo"
+        style="font-size:1.3em;color:limegreen;padding-left:10px;"
+       >
+         github.com/IntelliTree/RA-ChinookDemo
+       </a>
+     </li></ul>
+     
+     <div style="padding-top:5px;"></div>
+     <h4>Step-by-step Command History:</h4>
+     
+     <ul><li>
+       <a 
+        target="_blank" 
+        href="https://github.com/IntelliTree/RA-ChinookDemo/blob/master/cmd_history.sh"
+        style="font-size:1.1em;padding-left:10px;"
+        class="cmd_link"
+       >
+         cmd_history.sh
+       </a>
+     </li></ul>
+     
+   </div>
+   
+   
+   
   The videos are divided into both full parts and sub-sections below:
   <br> <br>
   
@@ -48,6 +71,7 @@ This video demo series provides a tutorial of RapidApp database features using t
           video_img = '/assets/local/misc/static/images/chinook/1_1_frame.png'
           video_length = '1:41'
           video_topics = [ 'Demo purpose &amp; overview', 'Companion Git Repo', 'Explain cmd_history.sh' ]
+          cmd_history_line = '1'
         %]
       
         [% INCLUDE util/video_tr.tt 
@@ -56,6 +80,7 @@ This video demo series provides a tutorial of RapidApp database features using t
           video_img = '/assets/local/misc/static/images/chinook/1_2_frame.png'
           video_length = '2:52'
           video_topics = [ 'Full Agenda', 'Table of Contents', 'Prerequisite Knowledge' ]
+          cmd_history_line = '27'
         %]
         
         [% INCLUDE util/video_tr.tt 
@@ -69,13 +94,13 @@ This video demo series provides a tutorial of RapidApp database features using t
             'Download&nbsp;&amp;&nbsp;Setup&nbsp;Chinook&nbsp;SQLite&nbsp;DB',
             'Setup DBIC Schema &amp; Model' 
           ]
+          cmd_history_line = '82'
         %]
       </table>
     </td>
   </tr></table>
   
   
-  <br><br>
   
   <h3>Part 2 - RapidDbic Basics</h3>
   
@@ -110,8 +135,9 @@ This video demo series provides a tutorial of RapidApp database features using t
             'Setup RapidDbic',
             'TabGui interface basics'
             'Demo main grid features',
-            'Filters, Searching & Summary Functions'
+            'Filters,&nbsp;Searching&nbsp;&amp;&nbsp;Summary&nbsp;Functions'
           ]
+          cmd_history_line = '156'
         %]
         
         [% INCLUDE util/video_tr.tt 
@@ -125,6 +151,7 @@ This video demo series provides a tutorial of RapidApp database features using t
             'TableSpecs',
             'Display Columns'
           ]
+          cmd_history_line = '193'
         %]
         
         [% INCLUDE util/video_tr.tt 
@@ -138,6 +165,7 @@ This video demo series provides a tutorial of RapidApp database features using t
             'Cascade deletes',
             'Auto editor types (grid vs combo)'
           ]
+          cmd_history_line = '205'
         %]
         
         [% INCLUDE util/video_tr.tt 
@@ -150,6 +178,7 @@ This video demo series provides a tutorial of RapidApp database features using t
             'Combinator Options',
             'Demo different CRUD modes',
           ]
+          cmd_history_line = '223'
         %]
         
         [% INCLUDE util/video_tr.tt 
@@ -163,14 +192,11 @@ This video demo series provides a tutorial of RapidApp database features using t
             'Virtual Display Column',
             'Part 2 conclusion'
           ]
+          cmd_history_line = '229'
         %]
       </table>
     </td>
   </tr></table>
-  
-  
-  
-  <br><br>
   
   <h3>Part 3 - Auth & Saved Views</h3>
   <hr>

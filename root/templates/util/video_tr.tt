@@ -25,6 +25,17 @@
           <li>[% topic %]</li>
           [% END %]
         </ul>
-       
+        
+        [% IF cmd_history_line %]
+         <a 
+          target="_blank" 
+          href="https://github.com/IntelliTree/RA-ChinookDemo/blob/master/cmd_history.sh#L[% cmd_history_line %]"
+          class="cmd_link"
+         >
+           cmd_history.sh#L[% cmd_history_line %]
+         </a>
+        
+        [% END %]
+        
       </td>
     </tr>
