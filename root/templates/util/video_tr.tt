@@ -27,15 +27,18 @@
         </ul>
         
         [% IF cmd_history_line %]
-         <a 
-          target="_blank" 
-          href="https://github.com/IntelliTree/RA-ChinookDemo/blob/master/cmd_history.sh#L[% cmd_history_line %]"
-          class="cmd_link"
-         >
-           cmd_history.sh#L[% cmd_history_line %]
-         </a>
-        
+          <img src="/assets/local/misc/static/images/chinook/console_run.png">
+          <a 
+           target="_blank" 
+           href="https://github.com/IntelliTree/RA-ChinookDemo/blob/master/cmd_history.sh#L[% cmd_history_line %]"
+           class="cmd_link"
+          >
+            cmd_history.sh<span style="color:crimson;">#L[% cmd_history_line %]</span>
+          </a>
         [% END %]
+        
+        
+        
         
       </td>
     </tr>
