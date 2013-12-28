@@ -18,6 +18,8 @@
   }
 %]
 
+[% SET last_ref = '' %]
+
 <!--
 <div class="jumbotron"></div>
 -->
@@ -61,6 +63,7 @@
       <td style="vertical-align:top;white-space:nowrap;">
         
         [% FOREACH ref IN commit_refs %]
+          [% SET last_ref = ref %]
           
             <img src="/assets/local/misc/static/images/chinook/text_code_colored.png">
             <a 
@@ -77,9 +80,32 @@
         [% END %]
       </td>
      </tr>
-    [% END %]
+
+     
+   [% END %]
   
   </table>
+
+[% IF commit_refs %]
+<div style="padding-top:20px;"></div>
+  
+<h3>Try it yourself:</h3>
+<pre>
+# install/upgrade RapidApp:
+cpanm RapidApp
+
+# clone the repo:
+git clone http://github.com/IntelliTree/RA-ChinookDemo.git
+cd RA-ChinookDemo/
+
+# checkout the code as of the end of this video -
+#  ("[% heading %]"):
+git checkout [% last_ref %]
+
+# start the test server:
+script/ra_chinookdemo_server.pl
+</pre>
+[% END %]
   
 </div>
 
