@@ -2,6 +2,22 @@
   active_section = 'demos'
 -%]
 
+[% SET commit_msg = {
+  '3ae1821' => 'first commit - freshly created Catalyst app',
+  '734d852' => 'setup chinook SQLite database',
+  'beb8d0a' => 'Created DBIC schema/model "DB"',
+  '3fe7a8f' => '(1) - Bare-bones working app (RapidDbic)',
+  'aae6591' => '(2) - example joined columns (grid configs)',
+  '68659f2' => '(3) - configured display_columns (TableSpecs)',
+  '377b5b0' => '(4) - turned on grid editing for all Sources',
+  '8dc11ee' => '(5) - Example editing across relationships',
+  '203c84d' => '(6) - set auto_editor_type (combo) + column TableSpecs',
+  'bc1ec9d' => '(7) - configured various CRUD options',
+  'e49bd2a' => '(8) - created "full_name" virtual column',
+  'c8fe469' => '(9) - full_name virtual column writable + display_column'
+  }
+%]
+
 <!--
 <div class="jumbotron"></div>
 -->
@@ -13,6 +29,57 @@
   </h3>
   <div style="padding-top: 5px;"></div>
   [% INCLUDE util/video_embed.tt %]
+  
+  <br><br>
+  
+  <table style="font-size:1.1em;">
+  
+   [% IF cmd_history_line %]
+    <tr>
+      <th style="width:150px;text-align:right;vertical-align:top;">
+        <div style="padding-right:20px;">Commands</div>
+      </th>
+      <td style="vertical-align:top;">
+        <img src="/assets/local/misc/static/images/chinook/console_run.png">
+        <a 
+         target="_blank" 
+         href="https://github.com/IntelliTree/RA-ChinookDemo/blob/master/cmd_history.sh#L[% cmd_history_line %]"
+         class="cmd_link"
+        >
+          cmd_history.sh<span style="color:crimson;">#L[% cmd_history_line %]</span>
+        </a>
+      </td>
+     </tr>
+     <tr><td><div style="padding-top:15px;"></div></td></tr>
+   [% END %]
+   
+   [% IF commit_refs %]
+     <tr>
+      <th style="width:150px;text-align:right;vertical-align:top;">
+        <div style="padding-right:20px;">Commits</div>
+      </th>
+      <td style="vertical-align:top;white-space:nowrap;">
+        
+        [% FOREACH ref IN commit_refs %]
+          
+            <img src="/assets/local/misc/static/images/chinook/text_code_colored.png">
+            <a 
+             target="_blank" 
+             href="https://github.com/IntelliTree/RA-ChinookDemo/commit/[% ref %]"
+             class="commit_link"
+            >[% ref %]</a>
+            [% IF commit_msg.$ref %]
+              <span style="color:silver;font-size:.9em;font-weight:normal;">
+                <i>&nbsp;&ndash;&nbsp;&nbsp;[% commit_msg.$ref %]</i>
+              </span>
+            [% END %]
+          <br>
+        [% END %]
+      </td>
+     </tr>
+    [% END %]
+  
+  </table>
   
 </div>
 

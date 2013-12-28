@@ -42,13 +42,18 @@
 
 
 [% IF video_file %]
-<br><br>
-
-&nbsp;&nbsp;Download video file: &nbsp;&nbsp;
-<img src="/assets/local/misc/static/images/chinook/film_save.png">
+<div style="float:right;padding-top:15px;">
+<p>
+<span style="font-size:.8em;">
+<i>&nbsp;&nbsp;Download video file:&nbsp;
+<img src="/assets/local/misc/static/images/chinook/film_save.png" style="width:12px;">
 <b><a 
   target="_blank"
-  href="[% url_prefix %][% video_file %]"  
+  href="[% url_prefix %][% video_file %]"
+  style="color:olive;"
 >[% video_file %]</a></b>
+</span></i>
+</p>
+</div>
 
 [% END %]
