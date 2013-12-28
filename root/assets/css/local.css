@@ -23,7 +23,7 @@ table.video_list  {
 }
 
 .video_list td {
-  padding: 10px;
+  padding-left: 10px;
   font-size: 0.9em;
 }
 
@@ -44,9 +44,13 @@ table.video_list  {
 }
 
 
-a.cmd_link {
+a.cmd_link, a.commit_link {
   color:limegreen;
   font-weight:bold;
   font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif;
 
+}
+
+a.commit_link {
+  color:maroon;
 }

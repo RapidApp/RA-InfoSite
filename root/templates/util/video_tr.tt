@@ -14,7 +14,7 @@
             src="[% video_img %]"
           >
         </a>
-        <div style="padding-top:35px;"></div>
+        <div style="padding-top:40px;"></div>
       </th>
       <td>
         <p>Length: <span style="color:#666666;"><i>[% video_length %]</i></span></p>
@@ -37,6 +37,19 @@
           </a>
         [% END %]
         
+        [% IF commit_refs %]
+          <p>
+            <img src="/assets/local/misc/static/images/chinook/text_code_colored.png">
+            [% FOREACH ref IN commit_refs %]
+              <a 
+               target="_blank" 
+               href="https://github.com/IntelliTree/RA-ChinookDemo/commit/[% ref %]"
+               class="commit_link"
+              >[% ref %]</a>
+            [%- "," UNLESS loop.last %]
+            [% END %]
+          </p>
+        [% END %]
         
         
         
