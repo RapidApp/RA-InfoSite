@@ -1,0 +1,180 @@
+<p>So far we've only been viewing data, and out-of-the-box, RapidDbic grids are read-only, for safety. But robust CRUD and editing features are also available - and fully configurable.</p>
+
+<p>Create, update and delete functionality can be configured in the grid_params section, which we're going to enable across the board.</p>
+
+<p>The special pseudo name "star-defaults" can be used to apply settings to all sources at once to save us from having to retype the same options over and over. But anything supplied in this section can still be overridden in the individual source configs.</p>
+
+<p>Access to update rows can be enabled with the 'updatable_colspec' setting which uses the same format as 'include_colspec' which we already saw. Colspecs are wildcards which match column names, so 'star' allows editing of all local columns. Like the include_colspec setting, joined columns can also be specified to allow editing of joined rows, but we're just enabling local editing for now.</p>
+
+<p>Create access is enabled with the 'creatable_colspec' setting, which also uses the same colspec format. This determines which column values can be set when creating a row, including joined columns which, if specified, will automatically create the related rows. Any true value in this setting turns on the create feature, even if it matches no columns. In that case, blank, default rows can still be inserted.</p>
+
+<p>Delete is enabled with the 'destroyable_relspec' setting, which is a variant of the colspec format in that it applies only to relationship names, simply because delete affects whole rows, not individual columns. 'star' simply enables deleting local rows. You can supply additional relationship paths to also be deleted. Note that this is mainly provided for the sake of completeness, as there are better ways to setup cascade deletes.</p>
+
+<p>With this config we've now turned on straightforward creating, updating and deleting in all grids.</p>
+
+<p>Now let's save, commit, restart and check it out.</p>
+
+<h4>EDIT GRIDS (demo)</h4>
+
+<p>To see the updated config, this time let's do a full browser refresh instead of reloading a single tab like we did before.</p>
+
+<p>Notice that the Track tab still automatically re-opened after the reload. Once again, this is because of the RESTful URL navigation in the TabGui interface. The active tab sets the URL, and the URL in turn sets the active tab. So reloading the Track URL takes us back to the Track tab, as it should be.</p>
+
+<p>To make things a little easier to see, let me shrink the browser, and zoom-in a bit more.</p>
+
+<p>  and let's hide the navtree to make more room,</p>
+
+<p>  and decrease the items per page so we don't have to
+  scroll up and down,</p>
+
+<p>  and also some column tweaks...</p>
+
+<p>The TabGui is flexible enough to work nicely at any resolution or window size.</p>
+
+<p>Now that we've enabled editing, there are a number of new buttons and elements showing in the grid view.</p>
+
+<p>The small pencil icons in the headers identify columns that can be updated. You can modify them directly in the grid if you enable cell editing. This toggle button lets you quickly switch between select and edit mode, which changes what happens when you click on cells in the grid.</p>
+
+<p>When cell editing is on, you can modify row columns one at a time by clicking on them. You can also advance to the next row by hitting the ENTER key, or advance to the next column by hitting TAB. And you can move backwards by adding SHIFT. SHIFT-ENTER moves up while SHIFT-TAB moves left.</p>
+
+<p>Just like when creating Filters, the type of field provided for editing is column-specific. Name and composer are simple text columns, so their editors are simple text fields. Mediatypeid, on the other hand is a single relationship column, and so its editor is an appropriate single-selection dialog of rows in the related source.</p>
+
+<p>Another way to edit is from the individual row page by double-clicking.</p>
+
+<p>This is the built-in row page, which is a property grid with similar cell-editing functionality, and updatable columns identified by a pencil icon. Note that row pages with custom layouts, edit behaviors and interfaces are also supported, and will be covered later in the Customizations demo.</p>
+
+<p>You may have noticed trackid is not editable, even though we set updatable_colspec to all columns. Editing is turned off by default for the auto-increment primary key column since you typically wouldn't want to edit it. But this is a column-level config default that can still be changed.</p>
+
+<p>Still another way to edit rows is with the edit button in the bottom toolbar. This opens a form window where you can edit all updatable columns of the selected row at once.</p>
+
+<p>This form-based interface is also the default for adding new rows, via the Add button. However, the fields are determined by the creatable_colspec instead of the updatable_colspec, which are the same in our case but could be different. The add form also loads by default in a separate tab, instead of a window.</p>
+
+<p>The columns in bold are required, which is set according to whether or not they are nullable in the database schema.</p>
+
+<p>The Save button is only enabled once all fields are validated, including required fields, and acceptable values for the column types. The validation is real-time, so the form can go back to being invalid which "re-disables" the save button.</p>
+
+<p>After saving the new row is opened automatically, and also appears in the grid.</p>
+
+<p>You can also create and select related items simultaneously. For example, we can create a new media type to select while creating a new track.</p>
+
+<p>This also works through multiple levels of relationships. For example, we can create a new album for our new track, and a new artist for our new album.</p>
+
+<p>There is also a toolbar button for delete which applies to the current row selection.</p>
+
+<p>And by default, delete asks for confirmation.</p>
+
+<p>You can also select and delete multiple rows at once using the standard multi-select paradigms such as holding ctrl while clicking, or selecting a range by holding shift.</p>
+
+<p>However, because we have foreign key constraints enabled, the database won't allow us to delete these rows because they are being referenced from other tables, as we can see in these multi relationships.</p>
+
+<p>If we try to delete these rows without first changing or removing the related rows, we'll receive an error.</p>
+
+<p>The message in the exception dialog is generated by the database itself. Additional Perl debug info is also shown for reference. All database changes are wrapped in transactions, so if an exception occurs the operation is rolled back.</p>
+ 
+<p>Foreign key constraints act as safeguards to protect the referential integrity of the database. Foreign keys can be configured to cascade instead of restrict, to automatically delete the related rows, if desired.</p>
+
+<p>This is best configured in the database schema itself, but if that isn't an option for whatever reason, cascade deletes, as well as other kinds of changes and updates across relationships can also be accomplished in RapidApp.</p>
+
+<h4>Relation Editing (config)</h4>
+
+<p>Cascade deletes make sense in certain places. When deleting an invoice, for example, it probably makes better sense to automatically delete its invoice_lines than to make the user do it.</p>
+
+<p>This can be done by adding the invoice_lines relationship to destroyable_relspec, which defines related rows to be automatically deleted in tandem with the base row. This is a powerful and potentially dangerous setting if configured incorrectly, so use sparingly and with caution.</p>
+
+<p>Editing of joined columns can also be enabled. For example, lets configure the InvoiceLine grid to be able to modify columns of the parent Invoice.</p>
+
+<p>The system requires access to read columns to modify them, so any updatable_colspec must fall within the include_colspec.</p>
+
+<p>The wildcard format applies to both column and relationship names, so you can enter things like 'star-dot-star' to join all columns in all relationships in one swoop. You can actually take it further, with star-dot-star-dot-star and so on, but keep in mind each level multiplies the number of columns by the number of relationships.</p>
+
+<p>Now let's configure editing for specific local and joined columns.</p>
+
+<p>For example, we can allow editing only on the local columns 'invoiceid' and 'unitprice', as well as all the columns that start with 'billing' in the parent Invoice.</p>
+
+<p>Notice here that invoiceid is both a column name and a relationship name, and don't conflict because of the context in which they're used. Names preceding dots match relationship paths to columns to be joined, while everything else matches columns.</p>
+
+<p>The colspec format is both flexible and compact.</p>
+
+<p>Now let's save, restart and check it out.</p>
+
+<h4>Relation Editing (demo)</h4>
+
+<p>Now in the InvoiceLine grid we can see that updating is allowed only for local columns invoiceid and unitprice, but also for joined columns from the invoiceid relationship with names starting with "billing".</p>
+
+<p>Also, because we used *.* in the include_colspec, all the columns of the other relationship, trackid, have been joined as well.</p>
+
+<p>But we'll go ahead and hide them for now to focus on the editable invoiceid join.</p>
+
+<p>When we modify these columns, we're actually changing the related Invoice row. Note that since more than one InvoiceLine is associated with a single Invoice, these changes indirectly affect other InvoiceLine rows, by association.</p>
+
+<p>If we refresh the data we can see the change we just made is also showing up for the other rows belonging to the same parent Invoice, which is to be expected. This is just the implication of editing across relationships which are many to one.</p>
+
+<p>Editing a joined column is really just "updating from a distance", which we can see if we look at the real row in the Invoice grid. And, likewise, if we make local changes here, they will show up in the corresponding joined columns there. These are just different views of the same data.</p>
+
+<p>These 4 rows are also shown in the multi relationship 'invoice_lines' in the parent Invoice, which is the other side of the 'invoiceid' relationship. And, because we added 'invoice_lines' to destroyable_relspec for the Invoice grid, if we delete this Invoice row, its 4 invoice_lines will automatically be deleted too.</p>
+
+<p>And, just to confirm this happened, we can refresh the InvoiceLine data and see that they have disappeared.</p>
+
+<p>You can also change the Invoice a particular InvoiceLine is linked to by modifying the invoiceid.</p>
+
+<p>This changes the foreign key, or the link itself, which is only in the local InvoiceLine row. This is very different from changing joined columns, which actually alters the remote, *related* row, as we just saw.</p>
+
+<p>This is the default selector interface for changing single relationships, like invoiceid. It?s a fully functional grid with sorting, searching, paging, and so on.</p>
+
+<p>This is really useful in cases like this, with lots of rows and lots of columns, to be able to find the exact row you're looking for.</p>
+
+<p>However, in other places, this might be overkill. For example, since there are only a handful of Media Types, instead of a full-blown grid, it might be better served by a basic dropdown. This is also a simple configuration option.</p>
+
+<h4>Editor type + column TableSpecs (config)</h4>
+
+<p>The TableSpec option 'auto_editor_type' determines the interface used when selecting a single row from the source, such as when it's the *target* of a foreign key, or single relationship column, as we just saw in the Track grid.</p>
+
+<p>By default this is a grid selector, but can be set to 'combo' to be a simple dropdown menu instead, with the display column used for the entries in the list.</p>
+
+<p>This is only suitable for relatively small tables with distinctive display columns. This is a judgment call that the system can't make on its own.</p>
+
+<p>Based on our knowledge of the real data and how it's being used in our application, we'll go ahead and use the combo for Media Type, ... and also Genre.</p>
+
+<p>There are also column-level TableSpec settings that we can set to further tailor interfaces and behaviors specific to our data.</p>
+
+<p>For example, 'bytes' is an integer column in the Track table, but more specifically, we know it represents file sizes, so we can set a renderer specific to that content. This is just the name of a JavaScript function used to format the column.</p>
+
+<p>Likewise, the schema only knows that 'unitprice' is a decimal column, but since we know it's storing money values, we can set a money-specific renderer for displaying it as well.</p>
+
+<p>Friendly header names, and default column widths can also be set, which we'll go ahead and do for several columns.</p>
+
+<p>You can also turn off certain capabilities, like storability, which you might want to do in certain places for performance. Here we're turning it off for the multi-relationship playlist_tracks which is a comparatively expensive subquery returning the related count.</p>
+
+<p>We don't have enough rows for it to matter, but it would be a very different story with hundreds of thousands, or millions of rows.</p>
+
+<p>You can also configure certain columns to start hidden, as well as other Boolean flags such as excluding columns from the grid quick search, and from filters.</p>
+
+<p>You can also turn add and edit off for individual columns which will override the creatable and updatable colspecs.</p>
+
+<p>This config is actually already the default for trackid because its an auto increment column, but you can turn them back on if you want.</p>
+
+<p>Or, you can disable the column from showing up altogether, which will hide it in the grid and columns menu.</p>
+
+<p>This is still separate from the quick search and filters, so to completely hide it from the interface you need to turn those off as well.</p>
+
+<p>These are just a few of the column-level options that are available.</p>
+
+<p>I should also mention that these TableSpec settings are actually just defaults that get consumed by the real components later on, like grids and pages, which link to the result sources.</p>
+
+<p>The final options can be set programmatically in those components, such as on each request, based on the user session for the purposes of permissions, and so on.</p>
+
+<p>But those details will be covered in a much later demo. I only bring it up now to be clear that RapidApp is NOT limited by hard-coded settings.</p>
+
+<h4>Editor type + column TableSpecs (demo)</h4>
+
+<p>If we reload the Track grid we can see the new column settings, like headers, default widths, and the custom renderers we configured for bytes and price.</p>
+
+<p>Also, since we turned off sorting for the playlist_tracks column, clicking its header does nothing. We can also see that the sort options are disabled in its header menu.</p>
+
+<p>The columns we set as hidden, composer and milliseconds, are also already unchecked in the columns menu as expected, and trackid isn't available at all since we disabled it entirely.</p>
+
+<p>Media Type and Genre also now use simple combo dropdowns for editing, which can be changed much faster than the grid selector.</p>
+
+<p>Notice that the Genre dropdown provides "(None)" as a choice, but Media Type doesn't. This is once again because mediatypeid isn't nullable, while genreid is.</p>
+
+<p>When allowed, NULL can also be chosen in the grid selector via 'Select None' in the bottom-left. The button is only shown when the foreign key column is nullable, which albumid is.</p>

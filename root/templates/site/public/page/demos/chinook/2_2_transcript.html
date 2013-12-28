@@ -1,0 +1,98 @@
+<h4>RELATIONSHIP COLUMNS</h4>
+
+<p>Besides understanding the column types of the schema, which is relatively simple, the system also understands the underlying inter-table relationships, and foreign key constraints.</p>
+
+<p>You may have noticed the little magnifying glass icons next to the values in certain columns. These are displayed within "relationship" columns and are clickable links to the related data.</p>
+
+<p>In this case, customerid is a foreign key which links each invoice row to a specific customer row which the link will open in a tab.</p>
+
+<p>Customer id is a single relationship, or a "belongs_to", because you can imagine that each invoice 'belongs to' a given customer.</p>
+
+<p>The other side of this single relationship - that is, from the perspective of the customer table - is a multi relationship, or a "has_many", because a given customer can be thought to "have many" invoices.</p>
+
+<p>The invoice table has a multi relationship of its own, invoice_lines, because an invoice "has_many" lines.</p>
+
+<p>Multi-relationship columns display a count of the related rows, and the link opens to a list of those rows, rather than a specific row as with a single relationship, like customerid</p>
+
+<p>These are column representations of the relationships defined in the associated DBIC result class, or source.</p>
+
+<p>The customerid column is both a relationship name and also a physical column in the table, however the multi relationship column 'invoice_lines' is virtual.</p>
+
+<p>Relationship columns are still considered "local" to the given source in which they are defined. Related, or joined columns, on the other hand, are columns from other tables that have been joined into the local view.</p>
+
+<p>Joined columns aren't configured automatically out-of-the-box because there are lots of possible configurations. You just need to tell the system which columns you want, in what sources, in the RapidDbic config.</p>
+
+<h4>
+JOINED COLUMNS</h4>
+
+<p>The settings for each DBIC Schema are defined in the hashkey of the model name, under the configs key. In our example we have only one schema model, DB, but others could also be defined and independently configured as well.</p>
+
+<p>The model config is divided into sections which are further divided into the individual sources. We're going to start with the grid_params section which is where the list of columns to include for each source grid can be defined.</p>
+
+<p>The special "include_colspec" setting defines the columns to include. A "colspec" is a list of wildcard strings, or globs, which match column names.</p>
+
+<p>'Star' is the default, implied config, which matches all local columns, including relationship columns, as we just discussed.</p>
+
+<p>Columns of remote tables, or joined columns, can also be defined using a dot-separated relationship path prefix.</p>
+
+<p>For example, 'artistid.name' will include the Artist 'name' column in the Album grid, as joined through the 'artistid' relationship, which, again, is the name of the DBIC relationship that was automatically configured when we created the 'DB' model with the helper script, based on the foreign-key constraint in the underlying database schema.</p>
+
+<p>Columns can also be joined across multiple levels. For example, albumid.artistid.* will include all Artist columns in the Track grid, joined through the intermediate Album table.</p>
+
+<p>Now let's save and commit our changes and restart the app</p>
+
+<h4>Browser Demo</h4>
+
+<p>Let's look at the Track grid to see the joined columns we just enabled.</p>
+
+<p>These are the local columns which are visible by default, but if we look at the columns list, we can see that 3 more are also available.</p>
+
+<p>These are the columns we joined from the Artist table, and relationship paths are shown in the column headers. Because we specified a star in the colspec, it joined all 3 columns which we can see in the Artist grid.</p>
+
+<p>Notice, relationship columns can be joined like any other column. In this case, the multi-relationship "albums" is associated with the artist, not really the track. 'Dog Eat Dog' has the Artist 'AC/DC', and then 'AC/DC' has 2 albums.</p>
+
+<p>We also joined artistid.name in the album grid, so that column is also available, and, no surprise, the artist for these albums is AC/DC.</p>
+
+<p>We know that the Track 'Dog Eat Dog' is in one of these albums. But, since we didn't join any of the Album columns, we can't see which one directly from the Track row.</p>
+
+<p>Well, we sort of can. We do have albumid, so we can see it belongs to albumid 4, which we can follow and see is "Let There Be Rock", or, just visually match artistid 4 back in the Album grid.</p>
+
+<p>But, "album id 4" isn't very friendly or descriptive, and we don't want our users to have to memorize IDs. If we wanted to see the album title in the Track grid, we could always add it as another joined column.</p>
+
+<p>But, another way is to change which column from the related row is shown in the local relationship column, which we can also do. The default display_column is the primary key, albumid, but if we change it to 'title', "Let There Be Rock" will be displayed here instead of "4"</p>
+
+<p>To do this we need to edit the RapidDbic config.</p>
+
+<h4>Set display_columns</h4>
+
+<p>We need to add another config section, TableSpecs, which, like grid_params, is sub-divided by result source.</p>
+
+<p>'TableSpec' is a RapidApp-specific name for extra metadata associated with a result source, or table. Unlike the grid_params, which apply only to the grid interfaces, TableSpecs apply globally, to all locations and interfaces interacting with the source.</p>
+
+<p>The 'display_column' defines which column should be used, by default, to represent a given row. It should be the name of a physical column in the table, and should be relatively short.</p>
+
+<p>This setting affects relationship columns, and also other contexts, like dropdown lists and selections, as we'll see in just a bit.</p>
+
+<p>As discussed, we're setting the display_column for Album to "title".</p>
+
+<p>While we're at it, let's set the display_column for a few other sources, too.</p>
+
+<p>Now let's save and commit our changes and start the app back up.</p>
+
+<h4>Browser demo</h4>
+
+<p>To see the new config, we can refresh the browser, or, simply right-click and reload the tab.</p>
+
+<p>As you can see, the albumid relationship column now shows the album title instead of the numeric id. We can also see the media and genre names instead of ids because we set the display_column for those sources also.</p>
+
+<p>One benefit of relationship columns over joined columns is the included link to the related row. It is also simpler to configure and applies to multiple interfaces.</p>
+
+<p>The system understands relationships for searching as well.</p>
+
+<p>The Quick search applies to the displayed values, as you would expect, but you can also perform specific searches on relationships using the filters.</p>
+
+<p>One of the condition types I haven't covered yet is the special 'is' condition, which allows selecting a specific related item among only the possible values.</p>
+
+<p>This opens a full grid view in a window as a selection dialog.</p>
+
+<p>With this filter, only Tracks with the Media Type "AAC audio file" will be shown, and this display string also comes from the display_column setting which we configured for MediaType.</p>

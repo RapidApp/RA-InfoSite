@@ -1,0 +1,169 @@
+<p>To recap what's been done so far, from Part 1:</p>
+
+<ul>
+<li>We've created a standard skeleton Catalyst app,</li>
+<li>setup SQLite with the Chinook sample database</li>
+<li>and created an associated DBIC Schema and model</li>
+<li>We've been tracking our changes with git,</li>
+<li>and the repo is available on Github,</li>
+<li>and we've also been using a custom shell alias, Commit with a capital C, to record notes and command history as we go, which is in the file cmd_history.sh</li>
+</ul>
+
+<p>Here are the commits from Part 1. The most recent, 01_prepared_app, is also a tag of the same name. So, we could jump to this point from scratch with these commands:</p>
+
+<p>Up until now this has been out-of-the-box Catalyst. Now we're going to enable RapidApp and load the RapidDbic plugin for web access to our SQLite database. This is done in the main application class, ChinookDemo.pm</p>
+
+<p>This is the boiler-plate application class content. I'm removing these comments to make the file more concise.</p>
+
+<p>To enable RapidApp, simply use it.</p>
+
+<p>RapidApp doesn't do anything by itself, but makes other modules and plugins available. For this demo we're going to be using RapidDbic, so we just need to load it, like any Cayalyst plugin.</p>
+
+<p>I'm removing these other plugins just because we're not going to be using them. However, it wouldn't break anything if I left them. And we'll go ahead and leave -Debug on for now.</p>
+
+<p>Now we need to configure RapidDbic, which is done in the standard manner for plugins in the Catalyst config.</p>
+
+<p>There are many available options, but the only one that is required is the list of DBIC::Schema models to use.</p>
+
+<p>And we'll specify the model we already setup with the Chinook sample database, which we named 'DB'.</p>
+
+<p>That's all that's needed for the base setup, so we'll save and exit.</p>
+
+<p>We need to do one last thing before we can start using the app, which is to remove the auto-created Root controller that displays the catalyst welcome screen. We need to do this because locally defined controllers always get precedence. The default Root controller is just a placeholder, anyway.</p>
+
+<p>Now let's commit our changes,
+  and start the app using the test server:</p>
+
+<p>Since we left -Debug mode on, various console messages are shown. The cyan lines show RapidApp modules being loaded. RapidDbic is actually just a config wrapper; under the hood it sets up and configures the real RapidApp modules that do the heavy lifting.</p>
+
+<p>Now that the app has started, let's fire up a browser and have a look</p>
+
+<h4>BROWSER DEMO</h4>
+
+<p>Out of the box, RapidDbic sets up a TabGui interface, which is a general-purpose UI provided by RapidApp, and is used by other modules as well. It consists of an ExtJS viewport with a navigation tree and tabbed content panel. RapidDbic sets up menu points for each database table, which open in grid views.</p>
+
+<p>The interface is all AJAX, so there are no browser page loads, but the tabs are still tied to real URLs, which are restful and absolute so they can be linked to or typed directly. Browser history is also integrated so the forward and back buttons work as expected without navigating away from the app.</p>
+
+<p>You can close tabs individually, or all but one from the right-click context menu.</p>
+
+<p>You can resize the navtree by clicking and dragging, or hide it, toggle it, unhide it again, and so on.</p>
+
+<p>This is very much like a desktop database admin utility, but keep in mind this is just a base which is designed to be extended into custom applications of all shapes and sizes.</p>
+
+<p>But before we get ahead of ourselves, let's explore some of the out-of-the-box features already provided by these grid views</p>
+
+<p></p>
+
+<h4>COLUMNS</h4>
+
+<p>Columns can be sorted, resized, and reordered with drag and drop, as well as enabled or disabled from the column menu, either individually, or toggled all at once.</p>
+
+<p>Rows can also be opened in their own view by double-clicking. The default row page is also a generic property grid, but custom layouts and interfaces are supported.</p>
+
+<p>For clients that can't double-click, like tablets, you can also single click on the special Open Item Column to open the row.</p>
+
+<p>The grid is paginated with standard paging controls in the toolbar, including page forward, page backward,  first page, last page,. And setting the items per page.</p>
+
+<p>Also notice that the sort applies to the entire set rather than the current page.</p>
+
+<p>The total row count is shown as well as the range of the current page.</p>
+
+<p>There is also a refresh button to reload the current page, and the most recent query time is also shown. This displays 1 or 2 numbers. The first number is the query time for the current page, and the second number, if present, is the query time of the total count, which isn't fetched every time for speed.</p>
+
+<h4>
+FILTERS</h4>
+
+<p>
+We're currently working with a very small data set, so the queries are only taking a few milliseconds. But with larger tables this feedback can be very helpful, especially when dealing with custom queries, which you can setup interactively by clicking the Filters button in the lower-right corner.</p>
+
+<p>Here you can add conditions consisting of a column, a type, and a value.</p>
+
+<p>Multiple conditions can be setup using ANDs and ORs. You can also type to filter the list when selecting a column.</p>
+
+<p>Now the only rows shown are those with country equal to USA or France.</p>
+
+<p>Whenever filters are active, a green pencil in shown within the button, as well as the number of conditions.</p>
+
+<p>Multiple types of conditions are supported, including special kinds, like matching on nulls and empty strings.</p>
+
+<p>Conditions can also be grouped and nested.</p>
+
+<p>These sets of conditions are equivalent to parenthesis which let you define the precedence of ands and ors.</p>
+
+<p>You can build as many conditions and levels as you want.</p>
+
+<p>You can also move the order of items up and down with the arrow buttons, and items are removed with the X button.</p>
+
+<h4>
+QUICK SEARCH</h4>
+
+<p>There is also a simple text box in the top toolbar for quick searching. By default, it simply returns rows with any column containing the search string.</p>
+
+<p>With the alternate "Exact" mode, whole columns are matched instead of substrings, which is faster for obvious reasons.</p>
+
+<p>Now no rows are returned since no columns are exactly equal to US.</p>
+
+<p>But, there are some exact matches for USA</p>
+
+<p>You can also choose which columns to search</p>
+
+<p>The text in the heading is determined by the selected mode and search columns. Here we're searching for an exact match on city only, and since there are no cities named 'USA' there are no rows found.</p>
+
+<p>But, if we type in London, those two matching rows are displayed.</p>
+
+<p>The search is launched by hitting enter or clicking the magnify button, and cleared by clicking the X button.</p>
+
+<h4>
+SEARCHING NUMBERS AND DATES</h4>
+
+<p>So far our examples have only involved text columns, but the since system understands the database schema, it is able to provide different interfaces for different column types, automatically.</p>
+
+<p>For instance, the Invoice table has some other types of columns, including a datetime column, and a numeric decimal column.</p>
+
+<p>So when we setup a filter on total, for example, since the system knows it's numeric, only appropriate, number-based conditions are shown.</p>
+
+<p>The value box also restricts and validates for numeric input, so for example it won't let you type in letters, only valid numbers.</p>
+
+<p>There is also very robust support for dates and times.</p>
+
+<p>The condition choices are date-specific, and the value input automatically provides a date selector.</p>
+
+<p>
+You can select or supply a specific date, like we just did, or you can enter a relative date, which is a text-based duration string with a flexible, human-readable format.</p>
+
+<p>The input dialog provides a quick reference with examples.</p>
+
+<p>For instance, we can enter minus 5 months, which translates into April 12th, which is "relative" to the current date and time, which as I am recording is September 12th at 3:36PM.</p>
+
+<p>So, this filter will show all invoices with a total greater than 10 over the past 5 months.</p>
+
+<p>The format is very flexible. It understands all the major English time units from weeks months and years down to hours minutes and seconds. It also supports combinations.</p>
+
+<p>You can type in whole words or use abbreviations. Whitespace is ignored.</p>
+
+<p>The effective date and time is shown in real time as you type, and you also know right away if what you've entered is invalid. This instant feedback makes it easy to use and understand, despite its flexibility and dynamic syntax</p>
+
+<p>The dialog box is just a helper. Once you get the hang of the format you can just type in values directly. You won't see the real-time effective date, but invalid entries are still shown in red.</p>
+
+<p>The offset string is relative to the current date and time by default, but you can supply different relative starting points like this month, this year, this quarter, and so on.</p>
+
+<p>So, this quarter, minus 1 quarter, would be the first day of last quarter, or midnight on april 1st. A relative date just translates into a normal date, which is a single point in time. But if we add a 'before' condition to go with our 'after' condition, we can define a range, in this case, the 3 month span between the start and the end of last quarter, which is currently the beginning of april through the end of june.</p>
+
+<p>If we save this filter we can now see that there were 3 invoices last quarter that were greater than 10. And if we remove the total condition we can see there were 18 in all.</p>
+
+<p>One of the benefits of relative dates over manually dates, besides being faster and needing less thinking, is that they move forward with time. So, if we saved this view and came back to it later, the results would change according to the current date, it would always be "last quarter", instead of april through june 2013.</p>
+
+<p>I'll be covering saved views a little later in the video.</p>
+
+<h4>
+COLUMN SUMMARIES</h4>
+
+<p>Another handy out-of-the-box feature are 'column summaries', which provide aggregate functions for calculations on the current set of rows.</p>
+
+<p>Sticking with the same relative date range filter, with this column summary we can see that the invoice total from last quarter, or the total of totals, was 104.94.</p>
+
+<p>Like the filter interfaces, column summaries are based on the underlying schema and column types, so text columns, like billingcountry, list different functions than number columns, like total.</p>
+
+<p>Now we can see that the average invoice last quarter was 5 83, and there were 11 unique countries.</p>
+
+<p>

@@ -1,0 +1,614 @@
+<h3>Part 2.1</h3>
+
+<p>To recap what's been done so far, from Part 1:</p>
+
+<ul>
+<li>We've created a standard skeleton Catalyst app,</li>
+<li>setup SQLite with the Chinook sample database</li>
+<li>and created an associated DBIC Schema and model</li>
+<li>We've been tracking our changes with git,</li>
+<li>and the repo is available on Github,</li>
+<li>and we've also been using a custom shell alias, Commit with a capital C, to record notes and command history as we go, which is in the file cmd_history.sh</li>
+</ul>
+
+<p>Here are the commits from Part 1. The most recent, 01_prepared_app, is also a tag of the same name. So, we could jump to this point from scratch with these commands:</p>
+
+<p>Up until now this has been out-of-the-box Catalyst. Now we're going to enable RapidApp and load the RapidDbic plugin for web access to our SQLite database. This is done in the main application class, ChinookDemo.pm</p>
+
+<p>This is the boiler-plate application class content. I'm removing these comments to make the file more concise.</p>
+
+<p>To enable RapidApp, simply use it.</p>
+
+<p>RapidApp doesn't do anything by itself, but makes other modules and plugins available. For this demo we're going to be using RapidDbic, so we just need to load it, like any Cayalyst plugin.</p>
+
+<p>I'm removing these other plugins just because we're not going to be using them. However, it wouldn't break anything if I left them. And we'll go ahead and leave -Debug on for now.</p>
+
+<p>Now we need to configure RapidDbic, which is done in the standard manner for plugins in the Catalyst config.</p>
+
+<p>There are many available options, but the only one that is required is the list of DBIC::Schema models to use.</p>
+
+<p>And we'll specify the model we already setup with the Chinook sample database, which we named 'DB'.</p>
+
+<p>That's all that's needed for the base setup, so we'll save and exit.</p>
+
+<p>We need to do one last thing before we can start using the app, which is to remove the auto-created Root controller that displays the catalyst welcome screen. We need to do this because locally defined controllers always get precedence. The default Root controller is just a placeholder, anyway.</p>
+
+<p>Now let's commit our changes,
+  and start the app using the test server:</p>
+
+<p>Since we left -Debug mode on, various console messages are shown. The cyan lines show RapidApp modules being loaded. RapidDbic is actually just a config wrapper; under the hood it sets up and configures the real RapidApp modules that do the heavy lifting.</p>
+
+<p>Now that the app has started, let's fire up a browser and have a look</p>
+
+<h4>BROWSER DEMO</h4>
+
+<p>Out of the box, RapidDbic sets up a TabGui interface, which is a general-purpose UI provided by RapidApp, and is used by other modules as well. It consists of an ExtJS viewport with a navigation tree and tabbed content panel. RapidDbic sets up menu points for each database table, which open in grid views.</p>
+
+<p>The interface is all AJAX, so there are no browser page loads, but the tabs are still tied to real URLs, which are restful and absolute so they can be linked to or typed directly. Browser history is also integrated so the forward and back buttons work as expected without navigating away from the app.</p>
+
+<p>You can close tabs individually, or all but one from the right-click context menu.</p>
+
+<p>You can resize the navtree by clicking and dragging, or hide it, toggle it, unhide it again, and so on.</p>
+
+<p>This is very much like a desktop database admin utility, but keep in mind this is just a base which is designed to be extended into custom applications of all shapes and sizes.</p>
+
+<p>But before we get ahead of ourselves, let's explore some of the out-of-the-box features already provided by these grid views</p>
+
+<p></p>
+
+<h4>COLUMNS</h4>
+
+<p>Columns can be sorted, resized, and reordered with drag and drop, as well as enabled or disabled from the column menu, either individually, or toggled all at once.</p>
+
+<p>Rows can also be opened in their own view by double-clicking. The default row page is also a generic property grid, but custom layouts and interfaces are supported.</p>
+
+<p>For clients that can't double-click, like tablets, you can also single click on the special Open Item Column to open the row.</p>
+
+<p>The grid is paginated with standard paging controls in the toolbar, including page forward, page backward,  first page, last page,. And setting the items per page.</p>
+
+<p>Also notice that the sort applies to the entire set rather than the current page.</p>
+
+<p>The total row count is shown as well as the range of the current page.</p>
+
+<p>There is also a refresh button to reload the current page, and the most recent query time is also shown. This displays 1 or 2 numbers. The first number is the query time for the current page, and the second number, if present, is the query time of the total count, which isn't fetched every time for speed.</p>
+
+<h4>
+FILTERS</h4>
+
+<p>
+We're currently working with a very small data set, so the queries are only taking a few milliseconds. But with larger tables this feedback can be very helpful, especially when dealing with custom queries, which you can setup interactively by clicking the Filters button in the lower-right corner.</p>
+
+<p>Here you can add conditions consisting of a column, a type, and a value.</p>
+
+<p>Multiple conditions can be setup using ANDs and ORs. You can also type to filter the list when selecting a column.</p>
+
+<p>Now the only rows shown are those with country equal to USA or France.</p>
+
+<p>Whenever filters are active, a green pencil in shown within the button, as well as the number of conditions.</p>
+
+<p>Multiple types of conditions are supported, including special kinds, like matching on nulls and empty strings.</p>
+
+<p>Conditions can also be grouped and nested.</p>
+
+<p>These sets of conditions are equivalent to parenthesis which let you define the precedence of ands and ors.</p>
+
+<p>You can build as many conditions and levels as you want.</p>
+
+<p>You can also move the order of items up and down with the arrow buttons, and items are removed with the X button.</p>
+
+<h4>
+QUICK SEARCH</h4>
+
+<p>There is also a simple text box in the top toolbar for quick searching. By default, it simply returns rows with any column containing the search string.</p>
+
+<p>With the alternate "Exact" mode, whole columns are matched instead of substrings, which is faster for obvious reasons.</p>
+
+<p>Now no rows are returned since no columns are exactly equal to US.</p>
+
+<p>But, there are some exact matches for USA</p>
+
+<p>You can also choose which columns to search</p>
+
+<p>The text in the heading is determined by the selected mode and search columns. Here we're searching for an exact match on city only, and since there are no cities named 'USA' there are no rows found.</p>
+
+<p>But, if we type in London, those two matching rows are displayed.</p>
+
+<p>The search is launched by hitting enter or clicking the magnify button, and cleared by clicking the X button.</p>
+
+<h4>
+SEARCHING NUMBERS AND DATES</h4>
+
+<p>So far our examples have only involved text columns, but the since system understands the database schema, it is able to provide different interfaces for different column types, automatically.</p>
+
+<p>For instance, the Invoice table has some other types of columns, including a datetime column, and a numeric decimal column.</p>
+
+<p>So when we setup a filter on total, for example, since the system knows it's numeric, only appropriate, number-based conditions are shown.</p>
+
+<p>The value box also restricts and validates for numeric input, so for example it won't let you type in letters, only valid numbers.</p>
+
+<p>There is also very robust support for dates and times.</p>
+
+<p>The condition choices are date-specific, and the value input automatically provides a date selector.</p>
+
+<p>
+You can select or supply a specific date, like we just did, or you can enter a relative date, which is a text-based duration string with a flexible, human-readable format.</p>
+
+<p>The input dialog provides a quick reference with examples.</p>
+
+<p>For instance, we can enter minus 5 months, which translates into April 12th, which is "relative" to the current date and time, which as I am recording is September 12th at 3:36PM.</p>
+
+<p>So, this filter will show all invoices with a total greater than 10 over the past 5 months.</p>
+
+<p>The format is very flexible. It understands all the major English time units from weeks months and years down to hours minutes and seconds. It also supports combinations.</p>
+
+<p>You can type in whole words or use abbreviations. Whitespace is ignored.</p>
+
+<p>The effective date and time is shown in real time as you type, and you also know right away if what you've entered is invalid. This instant feedback makes it easy to use and understand, despite its flexibility and dynamic syntax</p>
+
+<p>The dialog box is just a helper. Once you get the hang of the format you can just type in values directly. You won't see the real-time effective date, but invalid entries are still shown in red.</p>
+
+<p>The offset string is relative to the current date and time by default, but you can supply different relative starting points like this month, this year, this quarter, and so on.</p>
+
+<p>So, this quarter, minus 1 quarter, would be the first day of last quarter, or midnight on april 1st. A relative date just translates into a normal date, which is a single point in time. But if we add a 'before' condition to go with our 'after' condition, we can define a range, in this case, the 3 month span between the start and the end of last quarter, which is currently the beginning of april through the end of june.</p>
+
+<p>If we save this filter we can now see that there were 3 invoices last quarter that were greater than 10. And if we remove the total condition we can see there were 18 in all.</p>
+
+<p>One of the benefits of relative dates over manually dates, besides being faster and needing less thinking, is that they move forward with time. So, if we saved this view and came back to it later, the results would change according to the current date, it would always be "last quarter", instead of april through june 2013.</p>
+
+<p>I'll be covering saved views a little later in the video.</p>
+
+<h4>
+COLUMN SUMMARIES</h4>
+
+<p>Another handy out-of-the-box feature are 'column summaries', which provide aggregate functions for calculations on the current set of rows.</p>
+
+<p>Sticking with the same relative date range filter, with this column summary we can see that the invoice total from last quarter, or the total of totals, was 104.94.</p>
+
+<p>Like the filter interfaces, column summaries are based on the underlying schema and column types, so text columns, like billingcountry, list different functions than number columns, like total.</p>
+
+<p>Now we can see that the average invoice last quarter was 5 83, and there were 11 unique countries.</p>
+
+<h3>Part 2.2</h3>
+
+<h4>RELATIONSHIP COLUMNS</h4>
+
+<p>Besides understanding the column types of the schema, which is relatively simple, the system also understands the underlying inter-table relationships, and foreign key constraints.</p>
+
+<p>You may have noticed the little magnifying glass icons next to the values in certain columns. These are displayed within "relationship" columns and are clickable links to the related data.</p>
+
+<p>In this case, customerid is a foreign key which links each invoice row to a specific customer row which the link will open in a tab.</p>
+
+<p>Customer id is a single relationship, or a "belongs_to", because you can imagine that each invoice 'belongs to' a given customer.</p>
+
+<p>The other side of this single relationship - that is, from the perspective of the customer table - is a multi relationship, or a "has_many", because a given customer can be thought to "have many" invoices.</p>
+
+<p>The invoice table has a multi relationship of its own, invoice_lines, because an invoice "has_many" lines.</p>
+
+<p>Multi-relationship columns display a count of the related rows, and the link opens to a list of those rows, rather than a specific row as with a single relationship, like customerid</p>
+
+<p>These are column representations of the relationships defined in the associated DBIC result class, or source.</p>
+
+<p>The customerid column is both a relationship name and also a physical column in the table, however the multi relationship column 'invoice_lines' is virtual.</p>
+
+<p>Relationship columns are still considered "local" to the given source in which they are defined. Related, or joined columns, on the other hand, are columns from other tables that have been joined into the local view.</p>
+
+<p>Joined columns aren't configured automatically out-of-the-box because there are lots of possible configurations. You just need to tell the system which columns you want, in what sources, in the RapidDbic config.</p>
+
+<h4>
+JOINED COLUMNS</h4>
+
+<p>The settings for each DBIC Schema are defined in the hashkey of the model name, under the configs key. In our example we have only one schema model, DB, but others could also be defined and independently configured as well.</p>
+
+<p>The model config is divided into sections which are further divided into the individual sources. We're going to start with the grid_params section which is where the list of columns to include for each source grid can be defined.</p>
+
+<p>The special "include_colspec" setting defines the columns to include. A "colspec" is a list of wildcard strings, or globs, which match column names.</p>
+
+<p>'Star' is the default, implied config, which matches all local columns, including relationship columns, as we just discussed.</p>
+
+<p>Columns of remote tables, or joined columns, can also be defined using a dot-separated relationship path prefix.</p>
+
+<p>For example, 'artistid.name' will include the Artist 'name' column in the Album grid, as joined through the 'artistid' relationship, which, again, is the name of the DBIC relationship that was automatically configured when we created the 'DB' model with the helper script, based on the foreign-key constraint in the underlying database schema.</p>
+
+<p>Columns can also be joined across multiple levels. For example, albumid.artistid.* will include all Artist columns in the Track grid, joined through the intermediate Album table.</p>
+
+<p>Now let's save and commit our changes and restart the app</p>
+
+<h4>Browser Demo</h4>
+
+<p>Let's look at the Track grid to see the joined columns we just enabled.</p>
+
+<p>These are the local columns which are visible by default, but if we look at the columns list, we can see that 3 more are also available.</p>
+
+<p>These are the columns we joined from the Artist table, and relationship paths are shown in the column headers. Because we specified a star in the colspec, it joined all 3 columns which we can see in the Artist grid.</p>
+
+<p>Notice, relationship columns can be joined like any other column. In this case, the multi-relationship "albums" is associated with the artist, not really the track. 'Dog Eat Dog' has the Artist 'AC/DC', and then 'AC/DC' has 2 albums.</p>
+
+<p>We also joined artistid.name in the album grid, so that column is also available, and, no surprise, the artist for these albums is AC/DC.</p>
+
+<p>We know that the Track 'Dog Eat Dog' is in one of these albums. But, since we didn't join any of the Album columns, we can't see which one directly from the Track row.</p>
+
+<p>Well, we sort of can. We do have albumid, so we can see it belongs to albumid 4, which we can follow and see is "Let There Be Rock", or, just visually match artistid 4 back in the Album grid.</p>
+
+<p>But, "album id 4" isn't very friendly or descriptive, and we don't want our users to have to memorize IDs. If we wanted to see the album title in the Track grid, we could always add it as another joined column.</p>
+
+<p>But, another way is to change which column from the related row is shown in the local relationship column, which we can also do. The default display_column is the primary key, albumid, but if we change it to 'title', "Let There Be Rock" will be displayed here instead of "4"</p>
+
+<p>To do this we need to edit the RapidDbic config.</p>
+
+<h4>Set display_columns</h4>
+
+<p>We need to add another config section, TableSpecs, which, like grid_params, is sub-divided by result source.</p>
+
+<p>'TableSpec' is a RapidApp-specific name for extra metadata associated with a result source, or table. Unlike the grid_params, which apply only to the grid interfaces, TableSpecs apply globally, to all locations and interfaces interacting with the source.</p>
+
+<p>The 'display_column' defines which column should be used, by default, to represent a given row. It should be the name of a physical column in the table, and should be relatively short.</p>
+
+<p>This setting affects relationship columns, and also other contexts, like dropdown lists and selections, as we'll see in just a bit.</p>
+
+<p>As discussed, we're setting the display_column for Album to "title".</p>
+
+<p>While we're at it, let's set the display_column for a few other sources, too.</p>
+
+<p>Now let's save and commit our changes and start the app back up.</p>
+
+<h4>Browser demo</h4>
+
+<p>To see the new config, we can refresh the browser, or, simply right-click and reload the tab.</p>
+
+<p>As you can see, the albumid relationship column now shows the album title instead of the numeric id. We can also see the media and genre names instead of ids because we set the display_column for those sources also.</p>
+
+<p>One benefit of relationship columns over joined columns is the included link to the related row. It is also simpler to configure and applies to multiple interfaces.</p>
+
+<p>The system understands relationships for searching as well.</p>
+
+<p>The Quick search applies to the displayed values, as you would expect, but you can also perform specific searches on relationships using the filters.</p>
+
+<p>One of the condition types I haven't covered yet is the special 'is' condition, which allows selecting a specific related item among only the possible values.</p>
+
+<p>This opens a full grid view in a window as a selection dialog.</p>
+
+<p>With this filter, only Tracks with the Media Type "AAC audio file" will be shown, and this display string also comes from the display_column setting which we configured for MediaType.</p>
+
+<h3>Part 2.3</h3>
+
+<p>So far we've only been viewing data, and out-of-the-box, RapidDbic grids are read-only, for safety. But robust CRUD and editing features are also available - and fully configurable.</p>
+
+<p>Create, update and delete functionality can be configured in the grid_params section, which we're going to enable across the board.</p>
+
+<p>The special pseudo name "star-defaults" can be used to apply settings to all sources at once to save us from having to retype the same options over and over. But anything supplied in this section can still be overridden in the individual source configs.</p>
+
+<p>Access to update rows can be enabled with the 'updatable_colspec' setting which uses the same format as 'include_colspec' which we already saw. Colspecs are wildcards which match column names, so 'star' allows editing of all local columns. Like the include_colspec setting, joined columns can also be specified to allow editing of joined rows, but we're just enabling local editing for now.</p>
+
+<p>Create access is enabled with the 'creatable_colspec' setting, which also uses the same colspec format. This determines which column values can be set when creating a row, including joined columns which, if specified, will automatically create the related rows. Any true value in this setting turns on the create feature, even if it matches no columns. In that case, blank, default rows can still be inserted.</p>
+
+<p>Delete is enabled with the 'destroyable_relspec' setting, which is a variant of the colspec format in that it applies only to relationship names, simply because delete affects whole rows, not individual columns. 'star' simply enables deleting local rows. You can supply additional relationship paths to also be deleted. Note that this is mainly provided for the sake of completeness, as there are better ways to setup cascade deletes.</p>
+
+<p>With this config we've now turned on straightforward creating, updating and deleting in all grids.</p>
+
+<p>Now let's save, commit, restart and check it out.</p>
+
+<h4>EDIT GRIDS (demo)</h4>
+
+<p>To see the updated config, this time let's do a full browser refresh instead of reloading a single tab like we did before.</p>
+
+<p>Notice that the Track tab still automatically re-opened after the reload. Once again, this is because of the RESTful URL navigation in the TabGui interface. The active tab sets the URL, and the URL in turn sets the active tab. So reloading the Track URL takes us back to the Track tab, as it should be.</p>
+
+<p>To make things a little easier to see, let me shrink the browser, and zoom-in a bit more.</p>
+
+<p>  and let's hide the navtree to make more room,</p>
+
+<p>  and decrease the items per page so we don't have to
+  scroll up and down,</p>
+
+<p>  and also some column tweaks...</p>
+
+<p>The TabGui is flexible enough to work nicely at any resolution or window size.</p>
+
+<p>Now that we've enabled editing, there are a number of new buttons and elements showing in the grid view.</p>
+
+<p>The small pencil icons in the headers identify columns that can be updated. You can modify them directly in the grid if you enable cell editing. This toggle button lets you quickly switch between select and edit mode, which changes what happens when you click on cells in the grid.</p>
+
+<p>When cell editing is on, you can modify row columns one at a time by clicking on them. You can also advance to the next row by hitting the ENTER key, or advance to the next column by hitting TAB. And you can move backwards by adding SHIFT. SHIFT-ENTER moves up while SHIFT-TAB moves left.</p>
+
+<p>Just like when creating Filters, the type of field provided for editing is column-specific. Name and composer are simple text columns, so their editors are simple text fields. Mediatypeid, on the other hand is a single relationship column, and so its editor is an appropriate single-selection dialog of rows in the related source.</p>
+
+<p>Another way to edit is from the individual row page by double-clicking.</p>
+
+<p>This is the built-in row page, which is a property grid with similar cell-editing functionality, and updatable columns identified by a pencil icon. Note that row pages with custom layouts, edit behaviors and interfaces are also supported, and will be covered later in the Customizations demo.</p>
+
+<p>You may have noticed trackid is not editable, even though we set updatable_colspec to all columns. Editing is turned off by default for the auto-increment primary key column since you typically wouldn't want to edit it. But this is a column-level config default that can still be changed.</p>
+
+<p>Still another way to edit rows is with the edit button in the bottom toolbar. This opens a form window where you can edit all updatable columns of the selected row at once.</p>
+
+<p>This form-based interface is also the default for adding new rows, via the Add button. However, the fields are determined by the creatable_colspec instead of the updatable_colspec, which are the same in our case but could be different. The add form also loads by default in a separate tab, instead of a window.</p>
+
+<p>The columns in bold are required, which is set according to whether or not they are nullable in the database schema.</p>
+
+<p>The Save button is only enabled once all fields are validated, including required fields, and acceptable values for the column types. The validation is real-time, so the form can go back to being invalid which "re-disables" the save button.</p>
+
+<p>After saving the new row is opened automatically, and also appears in the grid.</p>
+
+<p>You can also create and select related items simultaneously. For example, we can create a new media type to select while creating a new track.</p>
+
+<p>This also works through multiple levels of relationships. For example, we can create a new album for our new track, and a new artist for our new album.</p>
+
+<p>There is also a toolbar button for delete which applies to the current row selection.</p>
+
+<p>And by default, delete asks for confirmation.</p>
+
+<p>You can also select and delete multiple rows at once using the standard multi-select paradigms such as holding ctrl while clicking, or selecting a range by holding shift.</p>
+
+<p>However, because we have foreign key constraints enabled, the database won't allow us to delete these rows because they are being referenced from other tables, as we can see in these multi relationships.</p>
+
+<p>If we try to delete these rows without first changing or removing the related rows, we'll receive an error.</p>
+
+<p>The message in the exception dialog is generated by the database itself. Additional Perl debug info is also shown for reference. All database changes are wrapped in transactions, so if an exception occurs the operation is rolled back.</p>
+ 
+<p>Foreign key constraints act as safeguards to protect the referential integrity of the database. Foreign keys can be configured to cascade instead of restrict, to automatically delete the related rows, if desired.</p>
+
+<p>This is best configured in the database schema itself, but if that isn't an option for whatever reason, cascade deletes, as well as other kinds of changes and updates across relationships can also be accomplished in RapidApp.</p>
+
+<h4>Relation Editing (config)</h4>
+
+<p>Cascade deletes make sense in certain places. When deleting an invoice, for example, it probably makes better sense to automatically delete its invoice_lines than to make the user do it.</p>
+
+<p>This can be done by adding the invoice_lines relationship to destroyable_relspec, which defines related rows to be automatically deleted in tandem with the base row. This is a powerful and potentially dangerous setting if configured incorrectly, so use sparingly and with caution.</p>
+
+<p>Editing of joined columns can also be enabled. For example, lets configure the InvoiceLine grid to be able to modify columns of the parent Invoice.</p>
+
+<p>The system requires access to read columns to modify them, so any updatable_colspec must fall within the include_colspec.</p>
+
+<p>The wildcard format applies to both column and relationship names, so you can enter things like 'star-dot-star' to join all columns in all relationships in one swoop. You can actually take it further, with star-dot-star-dot-star and so on, but keep in mind each level multiplies the number of columns by the number of relationships.</p>
+
+<p>Now let's configure editing for specific local and joined columns.</p>
+
+<p>For example, we can allow editing only on the local columns 'invoiceid' and 'unitprice', as well as all the columns that start with 'billing' in the parent Invoice.</p>
+
+<p>Notice here that invoiceid is both a column name and a relationship name, and don't conflict because of the context in which they're used. Names preceding dots match relationship paths to columns to be joined, while everything else matches columns.</p>
+
+<p>The colspec format is both flexible and compact.</p>
+
+<p>Now let's save, restart and check it out.</p>
+
+<h4>Relation Editing (demo)</h4>
+
+<p>Now in the InvoiceLine grid we can see that updating is allowed only for local columns invoiceid and unitprice, but also for joined columns from the invoiceid relationship with names starting with "billing".</p>
+
+<p>Also, because we used *.* in the include_colspec, all the columns of the other relationship, trackid, have been joined as well.</p>
+
+<p>But we'll go ahead and hide them for now to focus on the editable invoiceid join.</p>
+
+<p>When we modify these columns, we're actually changing the related Invoice row. Note that since more than one InvoiceLine is associated with a single Invoice, these changes indirectly affect other InvoiceLine rows, by association.</p>
+
+<p>If we refresh the data we can see the change we just made is also showing up for the other rows belonging to the same parent Invoice, which is to be expected. This is just the implication of editing across relationships which are many to one.</p>
+
+<p>Editing a joined column is really just "updating from a distance", which we can see if we look at the real row in the Invoice grid. And, likewise, if we make local changes here, they will show up in the corresponding joined columns there. These are just different views of the same data.</p>
+
+<p>These 4 rows are also shown in the multi relationship 'invoice_lines' in the parent Invoice, which is the other side of the 'invoiceid' relationship. And, because we added 'invoice_lines' to destroyable_relspec for the Invoice grid, if we delete this Invoice row, its 4 invoice_lines will automatically be deleted too.</p>
+
+<p>And, just to confirm this happened, we can refresh the InvoiceLine data and see that they have disappeared.</p>
+
+<p>You can also change the Invoice a particular InvoiceLine is linked to by modifying the invoiceid.</p>
+
+<p>This changes the foreign key, or the link itself, which is only in the local InvoiceLine row. This is very different from changing joined columns, which actually alters the remote, *related* row, as we just saw.</p>
+
+<p>This is the default selector interface for changing single relationships, like invoiceid. It?s a fully functional grid with sorting, searching, paging, and so on.</p>
+
+<p>This is really useful in cases like this, with lots of rows and lots of columns, to be able to find the exact row you're looking for.</p>
+
+<p>However, in other places, this might be overkill. For example, since there are only a handful of Media Types, instead of a full-blown grid, it might be better served by a basic dropdown. This is also a simple configuration option.</p>
+
+<h4>Editor type + column TableSpecs (config)</h4>
+
+<p>The TableSpec option 'auto_editor_type' determines the interface used when selecting a single row from the source, such as when it's the *target* of a foreign key, or single relationship column, as we just saw in the Track grid.</p>
+
+<p>By default this is a grid selector, but can be set to 'combo' to be a simple dropdown menu instead, with the display column used for the entries in the list.</p>
+
+<p>This is only suitable for relatively small tables with distinctive display columns. This is a judgment call that the system can't make on its own.</p>
+
+<p>Based on our knowledge of the real data and how it's being used in our application, we'll go ahead and use the combo for Media Type, ... and also Genre.</p>
+
+<p>There are also column-level TableSpec settings that we can set to further tailor interfaces and behaviors specific to our data.</p>
+
+<p>For example, 'bytes' is an integer column in the Track table, but more specifically, we know it represents file sizes, so we can set a renderer specific to that content. This is just the name of a JavaScript function used to format the column.</p>
+
+<p>Likewise, the schema only knows that 'unitprice' is a decimal column, but since we know it's storing money values, we can set a money-specific renderer for displaying it as well.</p>
+
+<p>Friendly header names, and default column widths can also be set, which we'll go ahead and do for several columns.</p>
+
+<p>You can also turn off certain capabilities, like storability, which you might want to do in certain places for performance. Here we're turning it off for the multi-relationship playlist_tracks which is a comparatively expensive subquery returning the related count.</p>
+
+<p>We don't have enough rows for it to matter, but it would be a very different story with hundreds of thousands, or millions of rows.</p>
+
+<p>You can also configure certain columns to start hidden, as well as other Boolean flags such as excluding columns from the grid quick search, and from filters.</p>
+
+<p>You can also turn add and edit off for individual columns which will override the creatable and updatable colspecs.</p>
+
+<p>This config is actually already the default for trackid because its an auto increment column, but you can turn them back on if you want.</p>
+
+<p>Or, you can disable the column from showing up altogether, which will hide it in the grid and columns menu.</p>
+
+<p>This is still separate from the quick search and filters, so to completely hide it from the interface you need to turn those off as well.</p>
+
+<p>These are just a few of the column-level options that are available.</p>
+
+<p>I should also mention that these TableSpec settings are actually just defaults that get consumed by the real components later on, like grids and pages, which link to the result sources.</p>
+
+<p>The final options can be set programmatically in those components, such as on each request, based on the user session for the purposes of permissions, and so on.</p>
+
+<p>But those details will be covered in a much later demo. I only bring it up now to be clear that RapidApp is NOT limited by hard-coded settings.</p>
+
+<h4>Editor type + column TableSpecs (demo)</h4>
+
+<p>If we reload the Track grid we can see the new column settings, like headers, default widths, and the custom renderers we configured for bytes and price.</p>
+
+<p>Also, since we turned off sorting for the playlist_tracks column, clicking its header does nothing. We can also see that the sort options are disabled in its header menu.</p>
+
+<p>The columns we set as hidden, composer and milliseconds, are also already unchecked in the columns menu as expected, and trackid isn't available at all since we disabled it entirely.</p>
+
+<p>Media Type and Genre also now use simple combo dropdowns for editing, which can be changed much faster than the grid selector.</p>
+
+<p>Notice that the Genre dropdown provides "(None)" as a choice, but Media Type doesn't. This is once again because mediatypeid isn't nullable, while genreid is.</p>
+
+<p>When allowed, NULL can also be chosen in the grid selector via 'Select None' in the bottom-left. The button is only shown when the foreign key column is nullable, which albumid is.</p>
+
+<h3>Part 2.4</h3>
+
+<p>Besides schema, and column-specific options, the general behaviors of the CRUD interfaces can also be changed.</p>
+
+<p>For example, you may have noticed that each change and cell edit we make saves instantly. This is because 'persist_immediately' is on. This is the simplest mode of operation, which is the default, but can also be customized in the RapidDbic config.</p>
+
+<h4>Custom CRUD configs</h4>
+
+<p>Persist immediately is a grid_params setting that can be turned on or off individually for each kind of write operation: create, update and destroy.</p>
+
+<p>This is essentially an autosave feature. When it's turned off, the user has to click save before outstanding changes are persisted to the database. This is similar to the behavior of a text editor, or other typical file-based application, where changes are held unsaved in memory.</p>
+
+<p>The persist immediately settings work in tandum with additional toggle parameters which determine how they are actually expressed in the interface. These combinator options use sane defaults, but can be changed for finer-grained control.</p>
+
+<p>The use_add_form setting enables or disables the add form dialog when creating records, and the autoload_added_record setting controls whether or not new records are automatically opened after being created.</p>
+
+<p>use_edit_form determines whether or not the edit button is available in the toolbar for updating records,</p>
+
+<p>and confirm_on_destroy turns delete confirmations on or off.</p>
+
+<p>Multiple interface scanarios can be achieved using different combinations of these options. To illustrate, I'm now going to setup three different grid configs to explain the options and how they interact, and them demo them in the browser, which should make everything clear.</p>
+
+<p>By default, all options are enabled, which we've already seen in action. However, turning certain options off will affect the defaults of related options.</p>
+
+<p>For example, turning off persist_immediately create, like we're doing here in the Track grid, also automatically turns off the add form, because it is redundant when persist_immediately if off, as we'll see in a minute.</p>
+
+<p>Also, turning off the add form in turn automatically turns off autoload_added_record, too. So, turning off persist_immediately create changes three options at once.</p>
+
+<p>Of course, these are just defaults, and you can set any option expressly. Instead of a simple 1 or 0 for true or false, the use_add_form setting optionally accepts a string value for true to simultaneously enable it and specify if it should be shown in a 'window' or a 'tab'. The default is tab, which we've already seen, so I'm setting it to window here for variety. Note that the use_edit_form setting also supports the same true, false, window or tab choices as use_add_form.</p>
+
+<p>So, now we've configured the Track grid with persist_immediatelty off, but to still use the add form.</p>
+
+<p>For our second scenario, in the MediaType grid, let's turn the add form off. Turning off the add form means that the grid itself will be used to create rows and supply new values, and this works differently depending on the persist_immediately-create setting. For this example, we'll turn it off, which still gives the user a chance to set the column values in the grid before inserting the new row, which I'll demonstrate momentarily.</p>
+
+<p>Also, note that you can split up the persist_immediately settings. For example, we can turn it off for create, but leave it on for update and destroy.</p>
+
+<p>When deleting rows, a confirmation dialog is shown by default, but can be turned off with the confirm_on_destroy setting. This also behaves differently according to its associated persist_immediately setting. If persist_immediately-destroy is on, selected rows will be deleted from the database instantly when clicking or hitting delete.</p>
+
+<p>For our third scenario, in the Genre grid, let's turn off the add form but leave the persist_immediately settings enabled, which is always the default if not otherwise specified.</p>
+
+<p>With this combination, clicking the add button will instantly insert blank, default rows into the database, without first giving the user a chance to supply column values. This isn't a typical workflow, but you may want to do it in certain cases nonetheless. Obviously, this requires that blank rows be allowed by the database schema to begin with, which means all columns must be nullable, auto-increments, or have non-conflicting default values.</p>
+
+<p>And let's turn off delete confirmations as well, so all CRUD operations in the Genre grid will be instant, with no hand holding.</p>
+
+<p>These three CRUD scenarios which we just configured cover a broad spectrum, but are still only a sample of the possible combinations.</p>
+
+<p>In order for these settings and there effect to fully make sense, we need to see them in action in the browser. So let's save, commit, restart and check them out.</p>
+
+<h4>Custom CRUD demo</h4>
+
+<p>When persist_immediately is off, changes are queued until you click the newly available Save button, which is enabled as soon as the first change is made.</p>
+
+<p>Unsaved changes are also shown visually with a red asterisk in the tab title, and a red triangle on individual columns.</p>
+
+<p>You can make as many changes within the current page as you like before clicking save which persists all of them at once.</p>
+
+<p>Changes can be made a lot faster in this mode since they don't each require a round-trip to the server.</p>
+
+<p>You can also revert changes instead of saving them with the Undo button, which is also newly available.</p>
+
+<p>We specifically configured this grid to still use the add form, but now in a window instead of a tab.</p>
+
+<p>But since persist_immediately-create is off, we still have to click save again in the grid before the new row is actually inserted in the database.</p>
+
+<p>The row page also still opens the new row, because it is automatically enabled when turning on the add form.</p>
+
+<p>On the other hand, in media type, the add form is off, which means clicking Add inserts blank rows immediately. However, since persist_immediately-create is off, the row still doesn't really exist until we click save.</p>
+
+<p>Right now it is a "phantom" row, which represents what **will** be inserted into the database. But it can be edited any other row to change what that is.</p>
+
+<p>This is basically the same concept as the add form, in that the field values don't actually exist anyplace other than local memory before being submitted.</p>
+
+<p>It is the values that are set when save is clicked that get inserted, at which point the phantom row transforms into a real row, with real values returned from the database, such as mediatypeid, which is an auto-increment column that is assigned automatically by the database.</p>
+
+<p>Deleting a phantom row means it never existed, just like if you closed the add form instead of saving it. These are just different interface styles for the same concept.</p>
+
+<p>In the Genre grid we left persist_immediately on for all operations, which you can see from the absence of save and undo buttons in the toolbar.</p>
+
+<p>But since we also turned off the add form, clicking the add button creates and inserts real blank rows instantly, with no intermediate phantom step.</p>
+
+<p>We can still edit the rows to set the column values, so there is no real difference from the user's standpoint. We're just making the database a participant in the whole process, including the blank row stage.</p>
+
+<p>There are different rationales and reasons you might want to pick one over another which will depend on the database design and application requirements.</p>
+
+<p>All sorts of different CRUD workflows can be configured with only a handful of options.</p>
+
+<p>These graphical front-ends, while complete and fully functional, are still only one possible presentation for the lower-level APIs. For instance, you could replace the add_form with a custom design for a different look/feel, which wouldn't necesarily even have to be a form. It could be any anything that provides the mechanism to supply new row data, which is understood and supported by RapidApp as a general CRUD interface concept, which the out-of-the-box add_form is built on top of. Clean API hooks are provided throughout the layers of the RapidApp toolchain to facilitate customization. Again, this will be covered in more detail later in the customization and extension demo.</p>
+
+<h3>Part 2.5</h3>
+
+<h4>VIRTUAL COLUMNS (Config)</h4>
+
+<p>One of RapidApp's particularly powerful and flexible backend API hooks are virtual columns. These are special, additional columns that you can add to your DBIC result sources that behave just like physical columns, but with custom-defined calculations as values.</p>
+
+<p>Virtual_columns are set up in their own section in the RapidDbic config, just like grid_params and TableSpecs, and is similarly subdivided by result source.</p>
+
+<p>For a simple example, lets add a virtual column called "full_name" to the Employee source as a concatination of the existing columns firstname and lastname.</p>
+
+<p>Virtual column definitions take the same options as the standard DBIC 'add_columns' function, such as data_type, nullability, and size, plus the special 'sql' parameter which defines the SQL expression used compute the column value for each row.</p>
+
+<p>Here we are simply joining firstname and lastname, with a space in the middle, using the SQLite pipe-pipe concatenation operator. The special pseudo-name 'self' is substituted with the alias to the current row at runtime.</p>
+
+<p>This is evaluated by the database itself, so the SQL must be compatible with the syntax of the server, which may differ from vendor to vendor. Many times the syntax will the same, but other times not. It all depends on what you're trying to do. String manipulation is one of those things that works differently on different servers, so this virtual_column wouldn't work as-is with another backend. For MySQL, for example, you would need to use the CONCAT function instead of the double-pipes.</p>
+
+<p>Virtual columns are implemented in this vendor-specific manner for the sake of performance, so the calculations can be done within the same query that fetches the rest of the data for a page of results. Virtual Columns will always still be many times slower than ordinary columns because they have to be calculated on every request and for every row considered by the query.</p>
+
+<p>So, for tables with lots of rows, it usually makes sense to disable sortability of virtual columns, just like for multi-relationship columns, which is also a kind of virtual column.</p>
+
+<h4>VIRTUAL COLUMNS (Demo)</h4>
+
+<p>If we open the Employee grid we can see that our new virtual full_name column is showing up as expected.</p>
+
+<p>Since it doesn't really exist in the table, but is instead based on other columns, changes to those underlying columns are reflected instantly, just as we would want and expect.</p>
+
+<p>But the column is still searchable, sortable, and so on, like any ordinary column, unless you decide to disable any of those features for the sake of performance.</p>
+
+<p>Quick Search is however automatically disabled for virtual columns, because it is too easy to forget and then fire off slow queries without meaning to. If you want to search on a virtual column, you just need to use the filters.</p>
+
+<p>The virtual column value is obviously read-only, but can actually be made editable if you tell the system how, that is, how to persist a new value when changed.</p>
+
+<h4>EDIT VIRTUAL COLUMNS (Config)</h4>
+
+<p>To make a virtual column editable, you need to supply a custom *write* function that reverses the logic of the custom *read* function - the SQL expression.</p>
+
+<p>This is done by supplying the special set_function parameter within the virtual column config. Since edits happen on an individual basis, this is done with normal perl-code instead of SQL, since there aren't the same performance restrictions.</p>
+
+<p>This CodeRef is called whenever the virtual column is modified, with the DBIC row object and new column value supplied as arguments, and is expected to handle persisting the value in whatever way is required.</p>
+
+<p>In this case, we need split the full name string back into its first and last name components, and then update those physical columns accordingly. These new values will in turn be reflected in the virtual column value, and completing the loop.</p>
+
+<p>The logic of either side is entirely up to you, which you can use to accomplish all sorts of different things. The sql and set_function don't even necessarily have to agree. For instance, you can do things like use 'SELECT NULL' for the sql, or read side, and then define a set_function to perform some arbitrary, independant operation, updating data elsewhere. So, with virtual columns, you can adapt the already well-defined database editing capabilities for the purposes of arbitrary data submission.</p>
+
+<p>Virtual columns are also very useful as display columns, which as we saw, are used as the short label for rows in places like dropdowns and relationship links. When there is no single column that is descriptive enough alone, a virtual column can be used to format and show several columns together, like full_name does.</p>
+
+<p>Now let's see how this works in the interface.</p>
+
+<h4>EDIT VIRTUAL COLUMNS (Demo)</h4>
+
+<p>Let me reload, and make some column changes so its easier to see the new functionality...</p>
+
+<p>Now that we've supplied a set_function, the full_name virtual column is editable. Assuming our logic is sane, edits will appear to work like any other column, even though custom code is at work behind the scenes.</p>
+
+<p>And this appears to be working correctly, with changes to full_name updating the real columns firstname and lastname.</p>
+
+<p>The Employee table points to itself with the 'reportsto' foreign key, so we can see the virtual column in use as the display column.</p>
+
+<p>We can also see both sides of the relationship in the same grid, with the multi-relationship column 'employees' showing the other side.</p>
+
+<p>We can see who each employee reports to and how many employees report to them. For instance, we can count 3 employee rows that report to nancy, which agree with the employees column in nancy's row.</p>
+
+<p>And since full_name is the display column, this is all very straightforward and human-readable.</p>
+
+<h4>PART 2 CONCLUSION</h4>
+
+<p>This is the end of part 2, RapidDbic basics, so I'm going to create a tag in the repo to mark this spot, and push it to Github.</p>
+
+<p>In part 3 I'll introduce some other turn-key RapidApp plugins to password-protect the application, and setup users with saved views which allow the state of the grids we've seen throughout part 2 to be saved and retrieved later.</p>
+
+<p>We'll also explore some other out-of-the-box database features that haven't been covered so far, including Batch Modify, Excel Export, and Frozen Conditions for permission-restricted views.</p>
+

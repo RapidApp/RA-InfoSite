@@ -1,0 +1,85 @@
+<p>Besides schema, and column-specific options, the general behaviors of the CRUD interfaces can also be changed.</p>
+
+<p>For example, you may have noticed that each change and cell edit we make saves instantly. This is because 'persist_immediately' is on. This is the simplest mode of operation, which is the default, but can also be customized in the RapidDbic config.</p>
+
+<h4>Custom CRUD configs</h4>
+
+<p>Persist immediately is a grid_params setting that can be turned on or off individually for each kind of write operation: create, update and destroy.</p>
+
+<p>This is essentially an autosave feature. When it's turned off, the user has to click save before outstanding changes are persisted to the database. This is similar to the behavior of a text editor, or other typical file-based application, where changes are held unsaved in memory.</p>
+
+<p>The persist immediately settings work in tandum with additional toggle parameters which determine how they are actually expressed in the interface. These combinator options use sane defaults, but can be changed for finer-grained control.</p>
+
+<p>The use_add_form setting enables or disables the add form dialog when creating records, and the autoload_added_record setting controls whether or not new records are automatically opened after being created.</p>
+
+<p>use_edit_form determines whether or not the edit button is available in the toolbar for updating records,</p>
+
+<p>and confirm_on_destroy turns delete confirmations on or off.</p>
+
+<p>Multiple interface scanarios can be achieved using different combinations of these options. To illustrate, I'm now going to setup three different grid configs to explain the options and how they interact, and them demo them in the browser, which should make everything clear.</p>
+
+<p>By default, all options are enabled, which we've already seen in action. However, turning certain options off will affect the defaults of related options.</p>
+
+<p>For example, turning off persist_immediately create, like we're doing here in the Track grid, also automatically turns off the add form, because it is redundant when persist_immediately if off, as we'll see in a minute.</p>
+
+<p>Also, turning off the add form in turn automatically turns off autoload_added_record, too. So, turning off persist_immediately create changes three options at once.</p>
+
+<p>Of course, these are just defaults, and you can set any option expressly. Instead of a simple 1 or 0 for true or false, the use_add_form setting optionally accepts a string value for true to simultaneously enable it and specify if it should be shown in a 'window' or a 'tab'. The default is tab, which we've already seen, so I'm setting it to window here for variety. Note that the use_edit_form setting also supports the same true, false, window or tab choices as use_add_form.</p>
+
+<p>So, now we've configured the Track grid with persist_immediatelty off, but to still use the add form.</p>
+
+<p>For our second scenario, in the MediaType grid, let's turn the add form off. Turning off the add form means that the grid itself will be used to create rows and supply new values, and this works differently depending on the persist_immediately-create setting. For this example, we'll turn it off, which still gives the user a chance to set the column values in the grid before inserting the new row, which I'll demonstrate momentarily.</p>
+
+<p>Also, note that you can split up the persist_immediately settings. For example, we can turn it off for create, but leave it on for update and destroy.</p>
+
+<p>When deleting rows, a confirmation dialog is shown by default, but can be turned off with the confirm_on_destroy setting. This also behaves differently according to its associated persist_immediately setting. If persist_immediately-destroy is on, selected rows will be deleted from the database instantly when clicking or hitting delete.</p>
+
+<p>For our third scenario, in the Genre grid, let's turn off the add form but leave the persist_immediately settings enabled, which is always the default if not otherwise specified.</p>
+
+<p>With this combination, clicking the add button will instantly insert blank, default rows into the database, without first giving the user a chance to supply column values. This isn't a typical workflow, but you may want to do it in certain cases nonetheless. Obviously, this requires that blank rows be allowed by the database schema to begin with, which means all columns must be nullable, auto-increments, or have non-conflicting default values.</p>
+
+<p>And let's turn off delete confirmations as well, so all CRUD operations in the Genre grid will be instant, with no hand holding.</p>
+
+<p>These three CRUD scenarios which we just configured cover a broad spectrum, but are still only a sample of the possible combinations.</p>
+
+<p>In order for these settings and there effect to fully make sense, we need to see them in action in the browser. So let's save, commit, restart and check them out.</p>
+
+<h4>Custom CRUD demo</h4>
+
+<p>When persist_immediately is off, changes are queued until you click the newly available Save button, which is enabled as soon as the first change is made.</p>
+
+<p>Unsaved changes are also shown visually with a red asterisk in the tab title, and a red triangle on individual columns.</p>
+
+<p>You can make as many changes within the current page as you like before clicking save which persists all of them at once.</p>
+
+<p>Changes can be made a lot faster in this mode since they don't each require a round-trip to the server.</p>
+
+<p>You can also revert changes instead of saving them with the Undo button, which is also newly available.</p>
+
+<p>We specifically configured this grid to still use the add form, but now in a window instead of a tab.</p>
+
+<p>But since persist_immediately-create is off, we still have to click save again in the grid before the new row is actually inserted in the database.</p>
+
+<p>The row page also still opens the new row, because it is automatically enabled when turning on the add form.</p>
+
+<p>On the other hand, in media type, the add form is off, which means clicking Add inserts blank rows immediately. However, since persist_immediately-create is off, the row still doesn't really exist until we click save.</p>
+
+<p>Right now it is a "phantom" row, which represents what **will** be inserted into the database. But it can be edited any other row to change what that is.</p>
+
+<p>This is basically the same concept as the add form, in that the field values don't actually exist anyplace other than local memory before being submitted.</p>
+
+<p>It is the values that are set when save is clicked that get inserted, at which point the phantom row transforms into a real row, with real values returned from the database, such as mediatypeid, which is an auto-increment column that is assigned automatically by the database.</p>
+
+<p>Deleting a phantom row means it never existed, just like if you closed the add form instead of saving it. These are just different interface styles for the same concept.</p>
+
+<p>In the Genre grid we left persist_immediately on for all operations, which you can see from the absence of save and undo buttons in the toolbar.</p>
+
+<p>But since we also turned off the add form, clicking the add button creates and inserts real blank rows instantly, with no intermediate phantom step.</p>
+
+<p>We can still edit the rows to set the column values, so there is no real difference from the user's standpoint. We're just making the database a participant in the whole process, including the blank row stage.</p>
+
+<p>There are different rationales and reasons you might want to pick one over another which will depend on the database design and application requirements.</p>
+
+<p>All sorts of different CRUD workflows can be configured with only a handful of options.</p>
+
+<p>These graphical front-ends, while complete and fully functional, are still only one possible presentation for the lower-level APIs. For instance, you could replace the add_form with a custom design for a different look/feel, which wouldn't necesarily even have to be a form. It could be any anything that provides the mechanism to supply new row data, which is understood and supported by RapidApp as a general CRUD interface concept, which the out-of-the-box add_form is built on top of. Clean API hooks are provided throughout the layers of the RapidApp toolchain to facilitate customization. Again, this will be covered in more detail later in the customization and extension demo.</p>

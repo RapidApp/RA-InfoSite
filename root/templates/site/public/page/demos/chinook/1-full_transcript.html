@@ -1,0 +1,221 @@
+<h3>Part 1.1</h3>
+
+<p>
+Welcome to the RapidApp "Chinook" demo.
+</p>
+
+<p>
+Across the videos in this series, I'll be demonstating just how fast and easy it is to create data-rich web applications with RapidApp, by interactively building one from scratch, step-by-step.</p>
+
+<p>
+This application will be built around the freely available Chinook sample database, to demonstrate RapidApp's powerful suite of database features, which are bundled in the turn-key "RapidDbic" plugin of the RapidApp distribution.</p>
+
+<p>
+We'll start with generalized, out-of-the-box base interfaces and functions, like grids, CRUD interfaces, query builders, custom views, users and permissions, and so on, and then progressively customize and extend unique examples, including integration with existing code from the Perl, Catalyst and DBIC ecosystems.</p>
+
+<p>
+In an effort to make this demo as efficient and useful as possible, every step is not only shown in the video portion, but also commited to a repository on Github, which includes both source code and shell command history.</p>
+
+<p>
+In fact, this *is* the shell we'll be working in, which is an SSH session on a Linux box, and is why I'm using these simple text comments instead of fancy slides, so they are a part of the command history, which is being recorded to the file 'cmd_history.sh' in the repo, as you can see here.</p>
+
+<p>
+So, this demo is a truly "multi-media" experience -- video, audio, code and commands.
+</p>
+
+<p>
+The idea is to make it easy to jump around to specific sections and topics, while still maintaining the continuity of a full step-by-step tutorial. So it is up to you how to use this demo. You can watch the video parts in order, or browse the repository and refer to the video only when you want a more detailed explanation of a particular change, command or feature.</p>
+
+<h3>Part 1.2</h3>
+
+<p>In this first section, which you are watching right now, I'll be doing mainly setup and house-work. I'll cover the installation of RapidApp, creating a new Catalyst app, setting up the actual Git repo and environment with command shortcuts, downloading and installing the database, and setting up a Catalyst DBIC model.</p>
+
+<p>
+The end of this section will be tagged in the repo as "zero-one prepared app" for reference.</p>
+
+<p>
+If you are an experienced Catalyst developer who's already familiar with these topics, which aren't specific to RapidApp, you can skip ahead to Part 2 which will cover the basics of the RapidDbic plugin, which is a turn-key web front-end for DBIC schemas, and will serve as the foundation for the app.</p>
+
+<p>
+This will include browser demos of the main, out-of-the-box features such as the auto-generated interfaces, and the powerful and dynamic grids which can be used to explore and manipulate the data in all sorts of useful ways.</p>
+
+</p>
+Part 2 will also cover configs for interacting with relationships and foreign keys in a variety of ways, as well as turning on editability with different types of CRUD interfaces, as well as other settings and choices provided in the RapidDbic config.</p>
+
+<p>
+We'll also configure a custom virtual column with hooks for both read and write.
+</p>
+
+<p>
+And, the end of this section will be tagged in the repo as "zero-two rapiddbic basics".
+</p>
+
+<p>
+Part 3 will cover Authentication and Saved Views, utilizing some other turn-key RapidApp plugins such as AuthCore, which provides an on-the-fly user database, as well as sessions and authentication, and also user management and admin interfaces.</p>
+
+<p>
+We'll also cover the NavCore plugin which provides turn-key saved views and editable navigation trees via drag and drop.</p>
+
+<p>
+The end of this section will be tagged as "zero-three auth and saved views" in the repo.
+</p>
+
+<p>
+Starting in part 4 we'll extend and go beyond the pre-built interfaces and modules, and delve into the under-the-hood APIs for advanced customization.</p>
+
+<p>
+We'll cover the templating system for customized, interactive designs and interfaces, and also show how normal Perl and Catalyst code can be written and integrated throughout the layers of the RapidApp and Catalyst APIs.</p>
+
+<p>
+We'll also cover RapidApp's asset management system for integrating custom front-side CSS and JavaScript code.</p>
+
+<p>
+This is a living demo with no predefined end-point. This example app code-base will be used to demo new examples and features on an ongoing basis. As this can fork off in lots of possible directions, as there is no limit on the different types of applications that can be made, future topics and examples will be covered in different branches of the repository.</p>
+
+<p>
+RapidApp is built on top of existing technologies, and this demo does assume you are already familiar with at least the basics of:</p>
+
+<ul>
+ <li>Perl,</li>
+ <li>Catalyst,</li>
+ <li>And DBIC.</li>
+</ul>
+
+<p>
+You should also be familiar with relational database concepts in general, ... table schemas, data types, foreign keys, and whatnot.</p>
+
+<p>
+And you obviously need to understand Git for the premise of this demo and its structure to make sense in the first place.</p>
+
+<p>
+But, because you can go at your own pace using the companion Git repo for reference, this demo is meant for both beginners and seasoned developers.</p>
+
+
+<h3>Part 1.3</h3>
+
+<p>So, first things first, we need to download and install the latest RapidApp from CPAN.</p>
+
+<p>
+As you can see, I already have RapidApp on my system, but if I didn't, it would have been automatically installed, along with all its dependencies, including Catalyst.
+</p>
+
+<p>
+If you don't have cpanm, you need to install cpanminus. Cpanminus is a handy tool for installing CPAN packages with dependencies without all the fuss and setup required for the traditional cpan client.</p>
+
+<p>
+Next, we need to create the new Catalyst application using the helper script provided by Catalyst. The app could be named anything, but I'm going to call it RA::ChinookDemo, as you can already see from the name of the Git repository, which we'll setup next.</p>
+
+<p>
+The catalyst.pl helper script has now created a skeleton of base files and directories which will be working in moving forward.</p>
+
+<p>
+Now I'm going to setup the actual git repository and tracking mechanisms I already described for the purposes of the demo.</p>
+
+<p>
+First, Initialize a fresh repo,
+  and then link it to Github -- this is the actual command where this happened.
+</p>
+
+<p>
+I'm going to setup a shortcut command to automate recording the changes as we go, so we can use 'Commit' with a capital C to:</p>
+
+<ul>
+<li>Append the latest command history to cmd_history.sh</li>
+<li>Reformat multiline commands, which I'll explain in a second</li>
+<li>Add all changes to the git index</li>
+<li>and commit those changes with a commit message</li>
+</ul>
+
+<p>
+RestoreHistNewlines is itself an alias which I'll create now.
+</p>
+
+<p>
+This is just for formatting of the history file, so that commands we split up into multiple lines using backslashes will look the same instead of being mushed into one line.
+</p>
+
+<p>
+We're just using <code>sed</code> to do some string processing. You don't need to understand this unless you're interested. The only reason it's being shown is because in this demo, everything is, and it is a helpful shortcut you might want to use for your own projects.
+</p>
+
+<p>
+But, the only thing that matters for the purposes of the demo is that we can now record changes as we go with a single command, which we'll be doing throughout the rest of the demo:</p>
+
+<p>
+Now we need to download the actual Chinook database, from their website.
+</p>
+
+<p>
+Chinook is available in multiple formats, and DBIC supports multiple formats, but we'll be using SQLite for this demo.
+</p>
+
+<p>I downloaded and extracted this zip file into the parent directory of our app, and I'll copy into our working directory now.</p>
+
+<p>
+There are several different formats available within in the zip file, each containing both the DDL, or schema, and the sample data.</p>
+
+<p>
+We're going to use the text-based SQL version, with auto-increments.
+</p>
+
+<p>
+As you can see, this file is about 1.7 megs.
+</p>
+
+<p>
+Now, I'm going to use it to create a new SQLite database as chinook.db in the current directory. This process takes a little while, about 10 minutes. I'll run it through time to show how long it actually takes.
+</p>
+
+<p>
+Note that this is error is safe to ignore; it's just caused by the Unicode BOM, or byte order mark, that the Chinook people have put at the start of the sql file. I could have removed it, but it doesn't hurt anything.
+</p>
+
+<p>
+Now let's fast-forward to the future.
+</p>
+
+<p>
+As you can see, command finished and ended up taking just over 8 minutes.
+</p>
+
+<p>
+Let's go ahead and commit our progress.
+</p>
+
+<p>
+Now we're going to create a Catalyst DBIC Schema Model for the new database using the helper script. This is still standard Catalyst. Under the hood this uses DBIC's Schema::Loader to automatically generate schema and result classes based on the database we just created.
+</p>
+
+<ul>
+<li>We're creating a new model called 'DB', which is just the name I picked, it could be anything</li>
+<li>based on DBIC::Schema, which tells Catalyst which helper to use</li>
+<li>using this for the DBIC schema namespace</li>
+<li>And now we'll set some Schema::Loader options, creating the result classes one time, statically, and also turning off POD generation in the created files</li>
+<li>Now comes the DSN string, which we're pointing at our SQLite database file</li>
+<li>And finally, we'll set some SQLite-specific connect_info options, such as enabling Unicode</li>
+<li>and turning on foreign key constraints, which are standard, but not on by default in SQLite</li>
+<li>and finally, setting quote_names, which has to do with how keywords are quoted in the SQL DBIC generates, and is required for RapidApp</li>
+</ul>
+
+<p>
+For more info on this command and the available options, see the DBIC::Schema helper docs on CPAN
+</p>
+
+<p>
+Now we'll commit the changes, which shows the files that were just created.
+</p>
+
+<p>
+These include the DBIC Schema and 11 result classes for each of the tables in the Chinook database, and the Catalyst Model, which links to them.</p>
+
+<p>
+We've now prepared a fresh Catalyst application environment. It doesn't do anything yet, but has the basic plumbing for access to the database that will serve as our launch point.
+</p>
+
+<p>
+Let's make another commit with a tag so its easy to jump back to this spot, ... and push to Github.</p>
+
+<p>
+In the next section we'll enable RapidApp and the RapidDbic plugin, and start playing with and configuring its out-of-the-box interfaces.</p>
+
+

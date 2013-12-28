@@ -106,7 +106,18 @@ git checkout [% last_ref %]
 script/ra_chinookdemo_server.pl
 </pre>
 [% END %]
-  
+
+[% IF transcript %]
+
+<br>
+<h4>Video Transcript</h4>
+
+<div class="repo_box" style="font-size:0.9em;">
+[% INSERT $transcript %]
+</div>
+
+[% END %]
+
 </div>
 
 [% END %]
