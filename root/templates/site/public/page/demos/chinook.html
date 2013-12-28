@@ -7,17 +7,32 @@
   <h2>RapidDbic <i>"Chinook"</i> Demo</h2>
   
 <p>
-This video demo series provides a tutorial of RapidApp database features via the "RapidDbic" plugin, using the 3rd-party "Chinook" sample database (<a target="_blank" href="http://chinookdatabase.codeplex.com/">chinookdatabase.codeplex.com</a>) for the backend.
+This demo provides a tutorial of RapidApp's powerful database features, provided by the turn-key "RapidDbic" plugin. The demo shows the full process of creating a working application from scratch, using the free "Chinook" sample database (<a target="_blank" href="http://chinookdatabase.codeplex.com/">chinookdatabase.codeplex.com</a>) for the backend.
+</p>
+
+<div style="padding-top:5px;"></div>
+<h3>
+<i style="color:#C58917;">"4-Track" Demo&nbsp;</i>
+<sup>
+<img src="/assets/local/misc/static/images/chinook/movie_24.png">
+<img src="/assets/local/misc/static/images/chinook/loudspeaker_24.png">
+<img src="/assets/local/misc/static/images/chinook/text_code_colored_24.png">
+<img src="/assets/local/misc/static/images/chinook/console_run_24.png">
+</sup>
+</h3>
+
+<p>
+Instead of just <i>2 tracks</i> (<span style="white-space:nowrap;"><img src="/assets/local/misc/static/images/chinook/movie.png">&nbsp;video</span> & <span style="white-space:nowrap;"><img src="/assets/local/misc/static/images/chinook/loudspeaker.png">&nbsp;audio</span>), like a typical turtorial video, this demo has <i>4 tracks</i> &ndash; <span style="white-space:nowrap;"><img src="/assets/local/misc/static/images/chinook/movie.png">&nbsp;video</span>, <span style="white-space:nowrap;"><img src="/assets/local/misc/static/images/chinook/loudspeaker.png">&nbsp;audio</span>, <i style="white-space:nowrap;"><img src="/assets/local/misc/static/images/chinook/text_code_colored.png">&nbsp;code</i> and <i style="white-space:nowrap;"><img src="/assets/local/misc/static/images/chinook/console_run.png">&nbsp;commands</i>. Each "frame" of the demo has been recorded with corresponding positions within the companion Git repository (i.e. commit logs) and command history file (<i><a target="_blank" 
+  href="https://github.com/IntelliTree/RA-ChinookDemo/blob/master/cmd_history.sh"
+  class="cmd_link"
+ >cmd_history.sh</a></i>) in which all commands, changes, commits and narrative text comments (used as "slides") have been recorded interactively throughout the demo.
 </p>
 
 <p>
-In this demo, a fully functioning database-driven app is created from scratch with every change and command recorded to the companion Github repository along the way. Commands and text-comments are recorded to the file 
-<i><a target="_blank" 
-  href="https://github.com/IntelliTree/RA-ChinookDemo/blob/master/cmd_history.sh"
-  class="cmd_link"
- >cmd_history.sh</a></i> within the repo.
+For a more complete explanation of how this works, see the short intro video: <b style="font-size:1.1em;"><a href="/demos/chinook/1_1"><img src="/assets/local/misc/static/images/chinook/control_play_blue.png" style="margin-bottom:3px;">&nbsp;Part 1.1 - Intro</a></b>.
 </p>
 
+<div class="repo_box">
    <div style="padding-top:2px;padding-bottom:15px;padding-left:40px;font-size:1.3em;font-weight:bold;">
      <h4>Companion Git Repo (code & commands):</h4>
      
@@ -56,15 +71,13 @@ In this demo, a fully functioning database-driven app is created from scratch wi
          </a>
        </td>
      </tr></table>
-     
-     
    </div>
-   
+ </div>
+
+<div style="padding-top:15px;"></div>
 <p>
-For a complete explanation, see the first video (<b><a href="/demos/chinook/1_1">1.1 - Intro</a></b>).
-Each video part corresponds to the associated line numbers within <i>cmd_history.sh</i>, as shown/linked below. For convenience, each part may be viewed in its entirety, or in smaller sub-sections on the right, as listed below.
+Each video segment corresponds to specific commits and lines in <i>cmd_history.sh</i> which are shown and linked to below. For convenience, each video part is available as either a large, single video, or sub-divided into several smaller videos, as shown below. 
 </p>
-   
   
   <h3>Part 1 - Intro, Agenda & Setup</h3>
   <hr>
@@ -112,7 +125,7 @@ Each video part corresponds to the associated line numbers within <i>cmd_history
           video_length = '4:36'
           video_topics = [ 
             'Create Skeleton Catalyst App',
-            'Setup Git "Commit" shotcut',
+            'Setup Git &amp; "Commit" shotcut',
             'Download&nbsp;&amp;&nbsp;Setup&nbsp;Chinook&nbsp;SQLite&nbsp;DB',
             'Setup DBIC Schema &amp; Model' 
           ]

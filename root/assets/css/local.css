@@ -54,3 +54,16 @@ a.cmd_link, a.commit_link {
 a.commit_link {
   color:maroon;
 }
+
+.repo_box {
+  background-color: #F5F5F5;
+  border: 1px solid #CCCCCC;
+  border-radius: 4px;
+  color: #333333;
+  display: block;
+  margin-left: 20px;
+  margin-right: 120px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 9.5px;
+}
