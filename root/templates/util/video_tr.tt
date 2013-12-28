@@ -7,7 +7,7 @@
 -%]
     <tr>
       <th>
-        <a href="[% video_url %]">
+        <a href="[% video_url %]" style="font-size:.85em;">
           [% video_name %]<br>
           <img 
             style="width:130px;"
@@ -17,7 +17,14 @@
         <div style="padding-top:40px;"></div>
       </th>
       <td>
-        <p>Length: <span style="color:#666666;"><i>[% video_length %]</i></span></p>
+        [% UNLESS commit_refs %]
+          <div style="padding-top:15px;"></div>
+        [% END %]
+        <p>
+          Length: <span style="color:#666666;padding-right:5px;"><i>[% video_length %]</i></span>
+          <img src="/assets/local/misc/static/images/chinook/movie.png" style="width:12px;">
+          <img src="/assets/local/misc/static/images/chinook/loudspeaker.png" style="width:12px;">
+        </p>
        
         Topics Covered:
         <ul>
