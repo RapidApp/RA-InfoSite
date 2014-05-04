@@ -24,7 +24,8 @@ __PACKAGE__->config(
   
   'Model::RapidApp' => {
     root_template_prefix  => 'site/public/page/',
-    root_template         => 'site/public/page/home'
+    root_template         => 'site/public/page/home',
+    disable_tabgui        => 1
   },
   
   'Plugin::RapidApp::TabGui' => {
