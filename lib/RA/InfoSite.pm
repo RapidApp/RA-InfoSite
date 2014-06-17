@@ -3,7 +3,7 @@ use Moose;
 use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
-use RapidApp 0.99311;
+use RapidApp 0.99310;
 
 use Catalyst qw/
   RapidApp::TabGui

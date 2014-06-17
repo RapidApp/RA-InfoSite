@@ -58,11 +58,7 @@
           [%- ELSE %]
            <li>
           [%- END %]
-            [%- IF section == 'about' -%]
-              <a href="/">[% section.ucfirst %]</a>
-            [%- ELSE -%]
               <a href="/[% section %]">[% section.ucfirst %]</a>
-            [%- END -%]
            </li>
         [%- END %]
         </ul>

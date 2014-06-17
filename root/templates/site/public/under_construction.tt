@@ -1,22 +1,37 @@
 <center>
-<table>
+<table style="font-size:0.85em;">
 <tbody><tr>
 <td style="width:200px;">
 <img src="/assets/local/misc/current/images/construction_sign.png">
 </td>
 <td style="width:450px;">
 <p>
-This site is still under construction, please try back later.
+This site is still under construction, please check back often...
 </p>
 
 <p>
 For support, or to learn more about the RapidApp project, please visit the <b>#rapidapp</b> IRC channel on <b>irc.perl.org</b>
 </p>
 
-<br>
+<div style="padding-left:10px;">
+<table style="padding:8px;">
+  <tr>
+    <td>CPAN Package:</td>
+    <td><a target="_blank" href="https://metacpan.org/pod/RapidApp">metacpan.org/pod/RapidApp</a></td>
+  </tr>
+    <tr>
+    <td>User &amp; Develper Manual:&nbsp;&nbsp;&nbsp;</td>
+    <td><a target="_blank" href="https://metacpan.org/pod/RapidApp::Manual">metacpan.org/pod/RapidApp::Manual</a></td>
+  </tr>
+  <tr>
+    <td>Github repository:</td>
+    <td><a target="_blank" href="https://github.com/vanstyn/RapidApp">github.com/vanstyn/RapidApp</a></td>
+  </tr>
+</table>
+</div>
 
 <p>
-Github repository: <b><a target="_blank" href="https://github.com/vanstyn/RapidApp">github.com/vanstyn/RapidApp</a></b>
+ <b></b>
 </p>
 
 </td>
