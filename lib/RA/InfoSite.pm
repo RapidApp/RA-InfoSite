@@ -3,18 +3,16 @@ use Moose;
 use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
-use RapidApp 0.99017;
+use RapidApp 0.99311;
 
-use Catalyst;
+use Catalyst qw/
+  RapidApp::TabGui
+  RapidApp::AuthCore
+  RapidApp::CoreSchemaAdmin
+/;
 
-with (
-  'Catalyst::Plugin::RapidApp::TabGui',
-  'Catalyst::Plugin::RapidApp::AuthCore',
-  #'Catalyst::Plugin::RapidApp::NavCore',
-  #'Catalyst::Plugin::RapidApp::CoreSchemaAdmin',
-);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 our $TITLE = "RA::InfoSite v" . $VERSION;
 
 my $tpl_regex = '^site\/public\/';
@@ -22,7 +20,7 @@ my $tpl_regex = '^site\/public\/';
 __PACKAGE__->config(
   name => 'RA::InfoSite',
   
-  'Model::RapidApp' => {
+  'RapidApp' => {
     root_template_prefix  => 'site/public/page/',
     root_template         => 'site/public/page/home'
   },
@@ -31,7 +29,7 @@ __PACKAGE__->config(
     title => $TITLE,
     nav_title => 'www.rapidapp.info',
     dashboard_url => '/',
-    #template_navtree_regex => $tpl_regex,
+    template_navtree_regex => $tpl_regex,
   },
   
   'Controller::RapidApp::Template' => {
