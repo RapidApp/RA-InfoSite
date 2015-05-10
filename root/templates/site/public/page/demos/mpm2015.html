@@ -1,0 +1,123 @@
+[% WRAPPER site/wrapper.html 
+  active_section = 'demos'
+  title = 'Milwaukee.pm 2015 Talk'
+-%]
+
+<div style="padding-top:60px;"></div>
+
+<div class="body-content">
+
+<h3>Milwaukee.pm 2015 Talk</h3>
+<h5 style="color:#666666;">&nbsp;<i>April 16, 2015</i></h5>
+
+<!--
+
+<img 
+    src="/assets/local/misc/static/images/yapcna_2014_first_slide_cap.png"
+    style="padding-top:10px;"
+  >
+</a>
+
+-->
+
+
+<div style="padding-top:15px;"></div>
+
+<iframe width="854" height="510" src="https://www.youtube.com/embed/FfAqsBrdCug" frameborder="0" allowfullscreen></iframe>
+
+<div style="padding-top:20px;width:800px;">
+
+<p>
+Live/stream presentation "Fun with RapidApp" given for the Milwaukee Perl Mongers group on April 16th, 2015
+</p>
+
+<p>
+This talk focused on some of the automatically generated, out-of-the-box interfaces that RapidApp is able to provide for various kinds database backends. This was covered using live demos of full apps, embedded interfaces, and command-line utilities.</p>
+
+<p>
+Some of the topics covered included:
+</p>
+
+<ul>
+<li>Embedded Table Grids, Trees and Property Grids</li>
+<li>Encapsulated Ajax designs</li>
+<li>Tabbed/RESTful navigation paradigms</li>
+<li>Plack/PSGI, Catalyst and command-line usage</li>
+<li>Integration with existing apps</li>
+</ul>
+
+<p>
+The slideshow itself was a live PSGI application, bundled with all the examples shown, which can be accessed on GitHub (see link below). The README in the repo includes commands needed to clone and run the app (also shown below).
+</p>
+
+<div style="padding-top:10px;"></div>
+
+<p>
+<h4><i>Slides/exampels used in the video:</i></h4>
+</p>
+
+<div class="repo_box">
+   <div style="padding-top:2px;padding-bottom:15px;padding-left:40px;font-size:1.3em;font-weight:bold;">
+     <h4>Companion Git Repo (slideshow &amp; code):</h4>
+     
+     <table><tr>
+       <td style="width:60px;text-align:right;">
+        <img src="/assets/local/misc/static/images/chinook/text_code_colored_32.png">
+       </td>
+       <td>
+         <a 
+          target="_blank" 
+          href="https://github.com/RapidApp/mpm2015"
+          style="font-size:1.3em;color:limegreen;padding-left:10px;"
+          class="cmd_link"
+         >
+           github.com/RapidApp/mpm2015
+         </a>
+       </td>
+     </tr></table>
+     
+     <div style="padding-top:5px;"></div>
+   </div>
+</div>
+
+<div style="padding-top:10px;"></div>
+
+<p>
+<h4><i>Try it yourself (from the README):</i></h4>
+</p>
+
+<div  >
+<pre class="repo_box" style="width:500px;"><span style="color:#969896;"># Clone the repo:</span>
+git clone https://github.com/RapidApp/mpm2015
+cd mpm2015/
+git submodule update --init
+
+<span style="color:#969896;"># Install required packages:</span>
+cpanm --installdeps <span class="pl-c1">.</span>
+
+<span style="color:#969896;"># Start-up app.psgi web-server on local port 5000:</span>
+<span style="color:#969896;"># (Note: use forward/back arrow keys to advance slides)</span>
+plackup</pre>
+</div>
+
+
+<br>
+
+<p>
+See also the event page at meetup.com:
+</p>
+
+<ul>
+
+  <li><a target="_blank" href="http://www.meetup.com/Milwaukee-Perl-Mongers/events/221500187/">
+  meetup.com/Milwaukee-Perl-Mongers/events/221500187/</a></li>
+
+</ul>
+
+
+
+<br>
+
+</div>
+
+[% END %]
