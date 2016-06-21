@@ -1,0 +1,154 @@
+[% WRAPPER site/wrapper.html 
+  active_section = 'demos'
+  title = 'YAPC::NA 2016 Talk'
+-%]
+
+<div style="padding-top:60px;"></div>
+
+<div class="body-content">
+
+<h3>YAPC::NA 2016 Talk</h3>
+<h5 style="color:#666666;">&nbsp;<i>June 21, 2016 &#64;11:00 AM (ET)</i></h5>
+
+<div style="padding-top:15px;"></div>
+
+<img 
+    src="/assets/local/misc/static/images/yn2016_frame.png"
+    style="padding-top:10px;width:800px;"
+  >
+</a>
+
+
+<div style="padding-top:20px;width:670px;">
+
+<p>
+RapidApp talk and live demo presented at YAPC::NA 2016 in Orlando, FL on June 21st.
+</p>
+
+<p>
+In this talk I'll demonstrate building a new database-driven application from scratch using RapidApp. We'll start by creating a schema, then bootstrapping and customizing an application. I'll focus on the areas which consistently produce the most questions on IRC, including:
+<p>
+
+<ul>
+	<li>Lifecycle for writing and modifying database schemas</li>
+	<li>Extending the built-in authentication and authorization systems</li>
+	<li>Writing custom user permissions</li>
+  <li>Hooking custom code in the backend</li>
+  <li>Writing custom and virtualized columns</li>
+  <li>Creating custom grid classes and other RapidApp modules</li>
+</ul>
+
+<p>
+Finally, we'll look at the latest and greatest ways to quickly deploy applications using Docker containers, with newly-available <b><a target="_blank" href="hub.docker.com/r/rapi/psgi">rapi/psgi</a></b> RapidApp image, now on Docker Hub.
+</p>
+
+<p>
+Both the slideshow itself as well as the demo application created during the talk are working PSGI apps,
+available on GitHub:
+</p>
+
+<div style="padding-top:2px;"></div>
+
+
+<div class="repo_box" style="width:700px;">
+   <div style="padding-top:2px;padding-bottom:15px;padding-left:40px;font-size:1.3em;font-weight:bold;">
+     <h4>Slideshow:</h4>
+     
+     <table><tr>
+       <td style="width:60px;text-align:right;">
+        <img src="/assets/local/misc/static/images/chinook/text_code_colored_32.png">
+       </td>
+       <td>
+         <a 
+          target="_blank" 
+          href="https://github.com/RapidApp/yn2016"
+          style="font-size:1.3em;color:limegreen;padding-left:10px;"
+          class="cmd_link"
+         >
+           github.com/RapidApp/yn2016
+         </a>
+       </td>
+     </tr></table>
+     
+     <div style="padding-top:15px;"></div>
+		 
+     <h4>Demo app (built during the talk):</h4>
+     
+     <table><tr>
+       <td style="width:60px;text-align:right;">
+        <img src="/assets/local/misc/static/images/chinook/text_code_colored_32.png">
+       </td>
+       <td>
+         <a 
+          target="_blank" 
+          href="https://github.com/RapidApp/Rapi-Demo-LogView"
+          style="font-size:1.3em;color:limegreen;padding-left:10px;"
+          class="cmd_link"
+         >
+           github.com/RapidApp/Rapi-Demo-LogView
+         </a>
+       </td>
+     </tr></table>
+     
+     <div style="padding-top:15px;"></div>
+		 
+     <h4>Tool used to replay code edits during the talk:</h4>
+     
+     <table><tr>
+       <td style="width:60px;text-align:right;">
+        <img src="/assets/local/misc/static/images/chinook/text_code_colored_32.png">
+       </td>
+       <td>
+         <a 
+          target="_blank" 
+          href="https://github.com/vanstyn/repo-cycler"
+          style="font-size:1.3em;color:limegreen;padding-left:10px;"
+          class="cmd_link"
+         >
+           github.com/vanstyn/repo-cycler
+         </a>
+       </td>
+     </tr></table>
+     
+     <div style="padding-top:5px;"></div>
+		 
+		 
+   </div>
+</div>
+
+<div style="padding-top:10px;"></div>
+
+
+
+<p>
+<h4><i>Run the slideshow yourself:</i></h4>
+</p>
+
+<div  >
+<pre class="repo_box" style="width:500px;"><span style="color:#969896;"># Clone the repo:</span>
+git clone --recursive https://github.com/RapidApp/yn2016
+cd yn2015/
+
+<span style="color:#969896;"># Start-up app.psgi web-server on local port 5000:</span>
+<span style="color:#969896;"># (Note: use forward/back arrow keys to advance slides)</span>
+plackup</pre>
+</div>
+
+
+<br>
+
+
+<p>
+See also the talk page on the <b>yapcna.org</b> site:
+</p>
+
+<ul>
+  <li><a target="_blank" href="http://www.yapcna.org/yn2016/talk/6587">
+  http://www.yapcna.org/yn2016/talk/6587</a></li>
+</ul>
+
+<br>
+
+</div>
+
+[% END %]
