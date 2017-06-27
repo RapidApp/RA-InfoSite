@@ -1,0 +1,93 @@
+[% WRAPPER site/wrapper.html 
+  active_section = 'demos'
+  title = 'TPC 2017 Rapi::Blog Talk'
+-%]
+
+<div style="padding-top:60px;"></div>
+
+<div class="body-content">
+
+<h3>TPC 2017 Talk &ndash; Rapi::Blog</h3>
+<h5 style="color:#666666;">&nbsp;<i>June 20, 2017 &#64;2:55 PM (ET)</i></h5>
+
+<div style="padding-top:15px;"></div>
+
+<!--
+<img 
+    src="/assets/local/misc/static/images/yn2016_frame.png"
+    style="padding-top:10px;width:800px;"
+  >
+</a>
+-->
+
+<!-- http://demosthenes.info/blog/717/Force-Embedded-YouTube-Videos-To-Play-In-HD -->
+<div class="responsive-container">
+  <iframe 
+    width="1280" height="720"
+    src="//youtube.com/embed/5s_eSYwXDwM?showinfo=0&VQ=HD720" 
+    frameborder="0" allowfullscreen
+  ></iframe>
+</div>
+
+
+<div style="padding-top:20px;width:670px;">
+
+<div style="margin-top:-15px;padding-bottom:10px;">
+<a href="https://www.youtube.com/watch?v=5s_eSYwXDwM" target="_blank">
+  https://www.youtube.com/watch?v=5s_eSYwXDwM
+</a>
+</div>
+
+<p>
+Rapi::Blog talk and live demo presented at The Perl Conference 2017 in Washington, DC on June 20th.
+</p>
+
+
+<h3>Talk Abstract</h3>
+
+<p>
+For this year's talk I'll be demoing the brand new RapidApp-based blogging platform Rapi::Blog which has been under development for around 6 months so far (as of march). It will be debuting with its first public release on CPAN on the day of the talk! Folks, this is conference-driven development at its finest.
+</p>
+
+<p>
+Previous years' RapidApp talks have also involved day-of, first-time releases of demo applications, but this year is different in that Rapi::Blog is first and foremost a real application and is designed for real-world use.
+</p>
+
+<p>
+Another blog?!?? Yep. And, like the countless other devs that came before me - who broke-down and said "screw it, I'll just write my own blog" - I went down the rabbit hole because I wanted some set of features and functionality that I couldn't find in other platforms. Everyone has different priorities, but for me, the two main factors were:
+</p>
+
+<ol>
+<li>Truer abstraction and separation between the front-end "theme" and the backend</li>
+<li>Leveraging the features and flexibility of RapidApp</li>
+</ol>
+
+<p>
+Rapi::Blog introduces a new "scaffold" pattern which consists of a file structure of template-driven, pure HTML/CSS documents that are able to represent the view and layout for a given site using a straightforward but comprehensive API of template directives. The intent is to reduce the translation effort needed to convert a static, font-end only html site (such as a bootstrap site/template) to be driven from dynamic, backend models. The blog pattern emerges from a content model (i.e. posts, comments, etc, standard blog features) and a scaffold of html templates, css and images which accesses it.
+</p>
+
+<p>
+Since it's powered by RapidApp, the initialization of the storage model is all automatic and requires virtually nothing for a new site/instance (unless you want to customize the model, which you can). In this way, a Rapi::Blog installation is able to consist of nothing but a scaffold and a place to store data. It is then the scaffold that can be extended, customized and adapted to create all kinds layouts, designs and scenarios. That said, Rapi::Blog will also ship with a fully-working vanilla-design scaffold needed to function as a blog.
+</p>
+
+<p>
+If you want to try another blog with maximalist features but minimalist effort, or, if you just want to see my/RapidApp's take on the blog question, this talk is for you. Just like previous RapidApp talks, this one will consist of all live-running, real-time demos (which you can run yourself), and should be a lot of fun.
+</p>
+
+
+<div style="padding-top:10px;"></div>
+
+<p>
+<h4><i>Slides used in the video:</i></h4>
+</p>
+
+
+<div style="padding-top:10px;padding-left:30px;">
+
+<iframe src="//www.slideshare.net/slideshow/embed_code/key/evIdD8k7gdQhJ4" width="595" height="485" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" style="border:1px solid #CCC; border-width:1px; margin-bottom:5px; max-width: 100%;" allowfullscreen> </iframe> <div style="margin-bottom:5px"> <strong> <a href="//www.slideshare.net/vanstyn/rapiblog-talk-tpc-2017" title="Rapi::Blog talk - TPC 2017" target="_blank">Rapi::Blog talk - TPC 2017</a> </strong> from <strong><a target="_blank" href="https://www.slideshare.net/vanstyn">Henry Van Styn</a></strong> </div>
+
+</div>
+
+</div>
+
+[% END %]
